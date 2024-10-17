@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
       body: _screens[_currentIndex]['page'],
        bottomNavigationBar: NavigationBarTheme(
     data: NavigationBarThemeData(
-      labelTextStyle: MaterialStateProperty.all(
+      labelTextStyle: WidgetStateProperty.all(
         montserratMedium.copyWith(fontSize: 11), 
       ),
     ),

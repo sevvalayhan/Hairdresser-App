@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hairdresser_project/widgets/custom_appbar.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});

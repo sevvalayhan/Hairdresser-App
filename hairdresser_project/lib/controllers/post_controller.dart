@@ -19,12 +19,6 @@ class PostController extends GetxController {
 
   final PostService postService = PostService();
 
-  @override
-  void onInit() {
-    super.onInit();
-    
-    //fetchPosts();
-  }
 
   Future<void> fetchPosts() async {
     try {
