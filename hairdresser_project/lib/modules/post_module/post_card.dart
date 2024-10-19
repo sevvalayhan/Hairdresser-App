@@ -71,7 +71,7 @@ class PostCard extends StatelessWidget {
             children: [
                Padding(
                 padding: EdgeInsets.zero,
-                child: PostMediaWidget(postImageUrlList: post.postImageUrlList,),
+                child: PostMediaWidget(post: post,),
               ),
               Padding(
                 padding: const EdgeInsets.all(16),

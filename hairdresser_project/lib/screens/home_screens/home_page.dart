@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hairdresser_project/constants/custom_text.dart';
+import 'package:hairdresser_project/controllers/home_page_controller.dart';
 import 'package:hairdresser_project/screens/home_screens/post_list_page.dart';
 import 'package:hairdresser_project/screens/home_screens/home_widgets/custom_drawer.dart';
 import 'package:hairdresser_project/screens/favorites_page.dart';
@@ -15,7 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 2;
+  HomePageController homePageController = Get.put(HomePageController());
   final List<Map<String, dynamic>> _screens = [
     {'title': 'Kuaförler', 'page': const FavoritesPage()},
     {'title': 'Ana Sayfa', 'page': const PostListPage()},
@@ -27,64 +29,84 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppbar(
-        title: _screens[_currentIndex]['title'],
+        title: _screens[homePageController.currentIndex.value]['title'],
         fontSize: 20,
       ),
       drawer: const CustomDrawer(),
-      body: _screens[_currentIndex]['page'],
-       bottomNavigationBar: NavigationBarTheme(
-    data: NavigationBarThemeData(
-      labelTextStyle: WidgetStateProperty.all(
-        montserratMedium.copyWith(fontSize: 11), 
-      ),
-    ),
-    child: NavigationBar(
-      backgroundColor: Colors.white,
-      surfaceTintColor: Colors.white,
-      shadowColor: CustomColors.lightPink,
-      selectedIndex: _currentIndex,
-      indicatorColor: Colors.white,
-      elevation: 2,
-      onDestinationSelected: (index) => setState(() {
-        _currentIndex = index;
-      }),
-      destinations: [
-        NavigationDestination(
-          icon: const Icon(Icons.content_cut_sharp),
-          selectedIcon: Icon(
-            Icons.content_cut_sharp,
-            color: CustomColors.lightPink,
-          ),
-          label: "Kuaförler",
-        ),
-        NavigationDestination(
-          icon: const Icon(Icons.home_rounded),
-          selectedIcon: Icon(
-            Icons.home_rounded,
-            color: CustomColors.lightPink,
-          ),
-          label: "Ana Sayfa",
-        ),
-        NavigationDestination(
-          icon: const Icon(Icons.history),
-          selectedIcon: Icon(
-            Icons.history,
-            color: CustomColors.lightPink,
-          ),
-          label: "Randevularım",
-        ),
-        NavigationDestination(
-          icon: const Icon(Icons.map_outlined),
-          selectedIcon: Icon(
-            Icons.map,
-            color: CustomColors.lightPink,
-          ),
-          label: "Yakınlarda Ara",
-        ),
-      ],
-    ),
-  ),
+      body: Obx(()=> _screens[homePageController.currentIndex.value]['page']),
+      bottomNavigationBar:const CustomNavigationBar(),
+    );
+  }
+}
 
+class CustomNavigationBar extends StatefulWidget {
+   const CustomNavigationBar({
+    super.key, 
+  });
+
+  @override
+  State<CustomNavigationBar> createState() => _CustomNavigationBarState();
+}
+
+class _CustomNavigationBarState extends State<CustomNavigationBar> {
+ 
+  HomePageController homePageController = Get.put(HomePageController());
+
+  @override
+  Widget build(BuildContext context) {
+    return NavigationBarTheme(
+      data: NavigationBarThemeData(
+        labelTextStyle: WidgetStateProperty.all(
+          montserratMedium.copyWith(fontSize: 11),
+        ),
+      ),
+      child: Obx(()=>
+         NavigationBar(
+          backgroundColor: Colors.white,
+          surfaceTintColor: Colors.white,
+          shadowColor: CustomColors.lightPink,
+          selectedIndex: homePageController.currentIndex.value,
+          indicatorColor: Colors.white,
+          elevation: 2,
+          onDestinationSelected: (index) => {
+            homePageController.currentIndex.value = index
+        },
+          destinations: [
+            NavigationDestination(
+              icon: const Icon(Icons.content_cut_sharp),
+              selectedIcon: Icon(
+                Icons.content_cut_sharp,
+                color: CustomColors.lightPink,
+              ),
+              label: "Kuaförler",
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.home_rounded),
+              selectedIcon: Icon(
+                Icons.home_rounded,
+                color: CustomColors.lightPink,
+              ),
+              label: "Ana Sayfa",
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.history),
+              selectedIcon: Icon(
+                Icons.history,
+                color: CustomColors.lightPink,
+              ),
+              label: "Randevularım",
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.map_outlined),
+              selectedIcon: Icon(
+                Icons.map,
+                color: CustomColors.lightPink,
+              ),
+              label: "Yakınlarda Ara",
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

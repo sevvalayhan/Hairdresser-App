@@ -1,15 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:hairdresser_project/models/post.dart';
 import 'package:hairdresser_project/static/custom_colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:video_player/video_player.dart';
 
 class PostMediaWidget extends StatefulWidget {
-  final List<String>? postImageUrlList;
-  final String? videoUrl;
+  final Post post;
   const PostMediaWidget({
     super.key,
-    this.postImageUrlList,
-    this.videoUrl,
+    required this.post,
   });
 
   @override
@@ -18,42 +19,64 @@ class PostMediaWidget extends StatefulWidget {
 
 class _PostMediaWidgetState extends State<PostMediaWidget> {
   final PageController _pageController = PageController();
+  VideoPlayerController? _videoPlayerController;
+  ChewieController? _chewieController;
+
   @override
   Widget build(BuildContext context) {
-    if (widget.postImageUrlList != null &&
-        widget.postImageUrlList!.isNotEmpty) {
-      return SizedBox(
-          height: 300,
-          child: Stack(children: [
-            PageView.builder(
-              controller: _pageController,
-              itemCount: widget.postImageUrlList!.length,
-              itemBuilder: (context, index) {
-                return CachedNetworkImage(
-                  imageUrl: widget.postImageUrlList![index],
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      const AnimatedProgressIndicator(),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                  fit: BoxFit.cover,
-                );
-              },
-            ),
-            Positioned(
-              bottom: 10,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: SmoothPageIndicator(                  
+    {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(
+              height: 300,
+              child: PageView.builder(
                   controller: _pageController,
-                  count: widget.postImageUrlList!.length,
-                  effect:  const JumpingDotEffect()
-                  
-                ),
-              ),
-            ),
-          ]));
-    } else {
-      return const SizedBox();
+                  itemCount: widget.post.postMediaList!.length,
+                  itemBuilder: (context, index) {
+                    if (widget.post.postMediaList?[index].mediaType == MediaType.video) {
+                      _videoPlayerController = VideoPlayerController.networkUrl(
+                          Uri.parse(widget.post.postMediaList![index].mediaUrl));
+                      _chewieController = ChewieController(
+                        videoPlayerController: _videoPlayerController!,
+                        autoPlay: true,
+                        looping: true,
+                      );
+                      return FutureBuilder(
+                          future: _videoPlayerController!.initialize(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              return Chewie(controller: _chewieController!);
+                            } else {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            }
+                          });
+                    } else if (widget.post.postMediaList![index].mediaType == MediaType.image) {
+                      return CachedNetworkImage(
+                        imageUrl: widget.post.postMediaList![index].mediaUrl,
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) =>
+                                const AnimatedProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                        fit: BoxFit.cover,
+                      );
+                    } else {
+                      return const SizedBox();
+                    }
+                  })),
+          const SizedBox(
+            height: 20,
+          ),
+          SmoothPageIndicator(
+            controller: _pageController,
+            count: widget.post.postMediaList!.length,
+            effect: const ScrollingDotsEffect(dotHeight: 8.0, dotWidth: 8.0),
+          )
+        ],
+      );
     }
   }
 }

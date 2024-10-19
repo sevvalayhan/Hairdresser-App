@@ -3,6 +3,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hairdresser_project/screens/home_screens/home_page.dart';
 
 void main() {
+//  debugPaintSizeEnabled=true;
   runApp(const MyApp());  
 }
 
@@ -13,5 +14,6 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
         theme: ThemeData(fontFamily: 'Montserrat',),
        home: const HomePage());
+      
   }
 }
