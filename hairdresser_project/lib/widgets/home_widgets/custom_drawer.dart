@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hairdresser_project/constants/custom_text.dart';
 import 'package:hairdresser_project/constants/dimensions.dart';
-import 'package:hairdresser_project/static/custom_colors.dart';
+import 'package:hairdresser_project/constants/static/custom_colors.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({
@@ -12,6 +12,7 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      
         child: Padding(
       padding: AppDimensions.pagePadding,
       

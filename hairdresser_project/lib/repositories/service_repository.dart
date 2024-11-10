@@ -1,17 +1,17 @@
 import 'dart:convert';
+import 'package:hairdresser_project/models/service.dart';
 import 'package:http/http.dart' as http;
-import 'package:hairdresser_project/models/post.dart';
 
-class PostService {
+class ServiceRepository {
   final String baseUrl = '';
 
   
-  Future<List<Post>?> fetchAllPosts() async {
+  Future<List<Service>?> fetchAllServices() async {
     try {
       final response = await http.get(Uri.parse(baseUrl));
       if (response.statusCode == 200) {
         List jsonResponse = json.decode(response.body);
-        return jsonResponse.map((data) => Post.fromJson(data)).toList();
+        return jsonResponse.map((data) => Service.fromJson(data)).toList();
       } else {
         print("Failed to load posts");
         return null;
@@ -22,17 +22,17 @@ class PostService {
     }
   }
   
-  Future<Post?> addPost(Post post) async {
+  Future<Service?> addService(Service service) async {
     try {
       final response = await http.post(
         Uri.parse(baseUrl),
         headers: {
           'Content-Type': 'application/json',
         },
-        body: json.encode(post.toJson()),
+        body: json.encode(service.toJson()),
       );
       if (response.statusCode == 201) {
-        return Post.fromJson(json.decode(response.body));
+        return Service.fromJson(json.decode(response.body));
       } else {
         print("Failed to add post");
         return null;
@@ -43,17 +43,17 @@ class PostService {
     }
   }
 
-  Future<Post?> updatePost(int postId, Post post) async {
+  Future<Service?> updateService(int serviceId, Service service) async {
     try {
       final response = await http.put(
-        Uri.parse('$baseUrl/$postId/'),
+        Uri.parse('$baseUrl/$serviceId/'),
         headers: {
           'Content-Type': 'application/json',
         },
-        body: json.encode(post.toJson()),
+        body: json.encode(service.toJson()),
       );
       if (response.statusCode == 200) {
-        return Post.fromJson(json.decode(response.body));
+        return Service.fromJson(json.decode(response.body));
       } else {
         print("Failed to update post");
         return null;
@@ -64,9 +64,9 @@ class PostService {
     }
   }
 
-  Future<bool> deletePost(int postId) async {
+  Future<bool> deleteService(int serviceId) async {
     try {
-      final response = await http.delete(Uri.parse('$baseUrl/$postId/'));
+      final response = await http.delete(Uri.parse('$baseUrl/$serviceId/'));
       if (response.statusCode == 204) {
         return true;
       } else {

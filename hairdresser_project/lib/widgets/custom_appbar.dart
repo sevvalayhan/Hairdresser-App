@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:hairdresser_project/static/custom_colors.dart';
+import 'package:hairdresser_project/constants/static/custom_colors.dart';
 
 // ignore: must_be_immutable
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
@@ -13,6 +13,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      iconTheme: IconThemeData(color: CustomColors.lightPink),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hairdresser_project/widgets/custom_navigation_bar.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -10,6 +11,6 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+ return  Scaffold(bottomNavigationBar: CustomNavigationBar(),);
   }
 }

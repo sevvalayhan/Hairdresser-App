@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hairdresser_project/constants/custom_text.dart';
 import 'package:hairdresser_project/controllers/home_page_controller.dart';
-import 'package:hairdresser_project/static/custom_colors.dart';
+import 'package:hairdresser_project/constants/static/custom_colors.dart';
 
 // ignore: must_be_immutable
 class CustomSearchBar extends StatelessWidget {
@@ -18,7 +18,7 @@ class CustomSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(8),
       child: GestureDetector(
         onTap: () {
           print("xxxxx");
@@ -27,7 +27,7 @@ class CustomSearchBar extends StatelessWidget {
           width: size.width * .95,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            border: Border.all(color: CustomColors.lightPink, width: .2),
+            border: Border.all(color: CustomColors.lightPink, width:1),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -35,13 +35,11 @@ class CustomSearchBar extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {
-                  print("search button");
                   homePageController.isSearchBarSelected.value = true;
-                  print(homePageController.isSearchBarSelected.value);
                 },
                 icon: Icon(
                   Icons.search,
-                  color: Colors.black54.withOpacity(.6),
+                  color:CustomColors.lightPink// const Color.fromARGB(137, 0, 0, 0).withOpacity(.6),                  
                 ),
               ),
               Expanded(
@@ -51,7 +49,7 @@ class CustomSearchBar extends StatelessWidget {
                   showCursor: false,
                   decoration: InputDecoration(
                     hintText: "Arama yapın",
-                    hintStyle: montserratMedium.copyWith(color: Colors.black54),
+                    hintStyle: montserratMedium.copyWith(color:CustomColors.lightPink),
                     border: InputBorder.none,
                   ),
                 ),

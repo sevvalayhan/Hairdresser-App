@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hairdresser_project/constants/custom_text.dart';
 import 'package:hairdresser_project/models/post.dart';
-import 'package:hairdresser_project/modules/post_module/post_media_widget.dart';
+import 'package:hairdresser_project/modules/post/widgets/post_media_widget.dart';
+import 'package:hairdresser_project/constants/static/custom_colors.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:readmore/readmore.dart';
 
 class PostCard extends StatelessWidget {
   const PostCard({
     super.key,
-    required this.size,
     required this.post,
   });
   final Post post;
-  final Size size;
 
   String formatDate(DateTime createdAt) {
-    final Duration difference = DateTime.now().difference(post.createdAt!);
+    final Duration difference = DateTime.now().difference(post.createdAt);
 
     if (difference.inDays > 0) {
       return '${difference.inDays} gün önce';
@@ -28,14 +29,15 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String createdAt = formatDate(post.createdAt!);
+    String createdAt = formatDate(post.createdAt);
     return GestureDetector(
       onTap: () {
         print("card");
       },
       child: Card(
         color: Colors.white,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        child:
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
@@ -64,41 +66,68 @@ class PostCard extends StatelessWidget {
                       ),
                     ],
                   ),
+                  IconButton(
+                      onPressed: () {}, icon: const Icon(Icons.more_horiz)),
                 ]),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-               Padding(
-                padding: EdgeInsets.zero,
-                child: PostMediaWidget(post: post,),
-              ),
+              postContentText(),
               Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  post.content.length > 250 ? post.content : post.content,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 6,
-                  style: montserratMedium,
+                padding: EdgeInsets.zero,
+                child: PostMediaWidget(
+                  post: post,
                 ),
               ),
+              
+           
             ],
           ),
           Padding(
             padding: const EdgeInsets.all(14),
             child: Row(
-              children: [
-                IconButton(onPressed: () {}, icon: const Icon(Icons.favorite)),
-                IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
-                IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
-              ],
-            ),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {}, icon: const Icon(Icons.favorite_border)
+                          // : Icon(
+                          //     Icons.favorite,
+                          //     color: CustomColors.lightPink,
+                          //   ),
+                          ),
+                      IconButton(
+                          onPressed: () {}, icon: const Icon(Icons.mode_comment_outlined)),
+                      IconButton(
+                          onPressed: () {}, icon: const Icon(Icons.share)),
+                    ],
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Iconsax.save_2_copy),
+                  )
+                ]),
           ),
           const SizedBox(
             height: 5,
           )
         ]),
       ),
+    );
+  }
+
+  Padding postContentText() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: ReadMoreText('${post.content}\n',
+          trimMode: TrimMode.Line,
+          trimLines: 2,
+          colorClickableText: CustomColors.lightPink,
+          trimCollapsedText: 'Devamını oku',
+          trimExpandedText: 'Kapat',
+          moreStyle: montserratMedium.copyWith(color: CustomColors.lightPink)),
     );
   }
 }
