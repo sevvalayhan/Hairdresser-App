@@ -126,7 +126,7 @@ class ServiceCardWithAppointmentButton extends StatelessWidget {
   Container appointmentButton(double screenHeight,double screenWidth) {
     return Container(
         height: screenHeight/25,
-        width: screenWidth/4,
+        width: screenWidth/3.5,
         child: FloatingActionButton(
           onPressed: () {},
           shape:
