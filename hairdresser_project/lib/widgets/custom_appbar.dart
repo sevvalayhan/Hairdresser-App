@@ -13,7 +13,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      iconTheme: IconThemeData(color: CustomColors.lightPink),
+      iconTheme: IconThemeData(color: CustomColors.lightPink),      
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

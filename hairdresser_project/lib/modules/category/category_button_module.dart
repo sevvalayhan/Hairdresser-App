@@ -5,33 +5,31 @@ import 'package:hairdresser_project/controllers/post_controller.dart';
 import 'package:hairdresser_project/controllers/service_controller.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
 
-class CategoryButtonList extends StatefulWidget {
-  const CategoryButtonList({
+class CategoryButtonList extends StatelessWidget {
+  CategoryButtonList({
     super.key,
     required this.categoryNames,
   });
 
   final List<String> categoryNames;
 
-  @override
-  State<CategoryButtonList> createState() => _CategoryButtonListState();
-}
-
-class _CategoryButtonListState extends State<CategoryButtonList> {
   final PostController postController = Get.put(PostController());
+
   final HomePageController homePageController = Get.put(HomePageController());
+
   final ServiceController serviceController = Get.put(ServiceController());
+
   @override
   Widget build(BuildContext context) {
     double horizontalSize = MediaQuery.sizeOf(context).height;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal:6),
       child: SizedBox(
-          height: 40,
+          height: 35,
           width: double.infinity,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: widget.categoryNames.length,
+            itemCount: categoryNames.length,
             itemBuilder: (BuildContext context, int index) {
               return Obx(
                 () => Padding(
@@ -50,9 +48,10 @@ class _CategoryButtonListState extends State<CategoryButtonList> {
         onPressed: () {
           print(index);
           print("post list lenght${postController.filteredPostList.length}");
-          print("service list lenght${serviceController.filteredServiceList.length}");
-          serviceController.filterService(widget.categoryNames[index]);
-          postController.filterPosts(widget.categoryNames[index]);
+          print(
+              "service list lenght${serviceController.filteredServiceList.length}");
+          serviceController.filterService(categoryNames[index]);
+          postController.filterPosts(categoryNames[index]);
           homePageController.selectedCategoryIndex.value = index;
         },
         style: OutlinedButton.styleFrom(
@@ -63,7 +62,7 @@ class _CategoryButtonListState extends State<CategoryButtonList> {
                     : Colors.white,
             shadowColor: CustomColors.lightPink),
         child: Text(
-          widget.categoryNames[index],
+          categoryNames[index],
           style: TextStyle(
               color: homePageController.selectedCategoryIndex.value == index
                   ? Colors.white

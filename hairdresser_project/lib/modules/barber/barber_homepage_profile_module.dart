@@ -159,7 +159,7 @@ class BarberProfileList extends StatelessWidget {
     double horizontalSize = MediaQuery.sizeOf(context).height;
     double verticalSize = MediaQuery.sizeOf(context).width;
     return SizedBox(
-      height: verticalSize * .30,
+      height: verticalSize * .35,
       width: horizontalSize,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,

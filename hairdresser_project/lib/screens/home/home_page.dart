@@ -6,10 +6,10 @@ import 'package:hairdresser_project/controllers/post_controller.dart';
 import 'package:hairdresser_project/controllers/service_controller.dart';
 import 'package:hairdresser_project/modules/barber/barber_homepage_profile_module.dart';
 import 'package:hairdresser_project/modules/category/category_button_module.dart';
-import 'package:hairdresser_project/modules/nearby_places_services/nearby_places_module.dart';
+import 'package:hairdresser_project/modules/service/nearby_places_services/nearby_places_module.dart';
 import 'package:hairdresser_project/modules/post/post_list_module.dart';
-import 'package:hairdresser_project/modules/recomended_service/recomended_service_module.dart';
-import 'package:hairdresser_project/modules/service/base_service_module.dart';
+import 'package:hairdresser_project/modules/service/recomended_service/recomended_service_module.dart';
+import 'package:hairdresser_project/modules/service/base_services/base_service_module.dart';
 import 'package:hairdresser_project/widgets/home_widgets/custom_drawer.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
 import 'package:hairdresser_project/widgets/custom_appbar.dart';
@@ -63,17 +63,21 @@ class HomePage extends StatelessWidget {
               categoryNames: categoryNames,
             ),
           ),
-          BaseServiceModule(),
           SliverToBoxAdapter(
             child: RecomendedServiceListView(),
           ),
           SliverToBoxAdapter(
             child: NearbyPlacesModule(),
           ),
+          BaseServiceModule(),
           const SliverToBoxAdapter(
-            child: SeeDetails(detailsName: "Gönderiler", pageName: "/"),
+            child: SeeDetails(detailsName: "", pageName: "/"),
           ),
           PostListPage(),
+          const SliverToBoxAdapter(
+            child: SeeDetails(detailsName: "", pageName: "/"),
+          ),
+       
         ],
       ),
       bottomNavigationBar: CustomNavigationBar(),
@@ -95,26 +99,27 @@ class SeeDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                detailsName,
-                style: montserratSemiBold,
-              ),
-              TextButton(
-                onPressed: () {
-                  Get.toNamed(pageName);
-                },
-                child: Text("Devamını gör",
+          Text(
+            detailsName,
+            style: montserratSemiBold,
+          ),
+          TextButton(
+            onPressed: () {
+              Get.toNamed(pageName);
+            },
+            child: Row(
+              children: [
+                Text("Devamını gör",
                     style: montserratMedium.copyWith(
                       color: CustomColors.lightPink,
                     )),
-              )
-            ],
-          ),
+                  Icon(Icons.keyboard_arrow_right_rounded ,color: CustomColors.lightPink,)
+              ],
+            ),
+          )
         ],
       ),
     );

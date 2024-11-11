@@ -39,7 +39,7 @@ class ServiceCardWithAppointmentButton extends StatelessWidget {
                 child: Column(mainAxisAlignment:MainAxisAlignment.spaceBetween ,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(service.serviceTitle, style: montserratBold),
+                    Text(service.serviceTitle, style: montserratBold) ,
                     Row(
                       children: [
                         Text(
@@ -123,8 +123,8 @@ class ServiceCardWithAppointmentButton extends StatelessWidget {
     );
   }
 
-  Container appointmentButton(double screenHeight,double screenWidth) {
-    return Container(
+  SizedBox appointmentButton(double screenHeight,double screenWidth) {
+    return SizedBox(
         height: screenHeight/25,
         width: screenWidth/3.5,
         child: FloatingActionButton(
@@ -140,15 +140,15 @@ class ServiceCardWithAppointmentButton extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(30.0)),
             child: Container(
-              constraints: BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+              constraints: const BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
               alignment: Alignment.center,
               child: Text(
                 "Randevu Al",
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white),
+                style: montserratSmall.copyWith(color: CustomColors.white,
               ),
             ),
           ),
-        ));
+        )));
   }
 }

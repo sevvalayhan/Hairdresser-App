@@ -10,8 +10,7 @@ class BarberHomepageProfileCard extends StatelessWidget {
   Widget build(BuildContext context) {
     double horizontalSize = MediaQuery.sizeOf(context).height;
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: horizontalSize * .002,),
+      padding: const EdgeInsets.all(8.0),
       child: SizedBox(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

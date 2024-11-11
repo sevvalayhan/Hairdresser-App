@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hairdresser_project/controllers/service_controller.dart';
-import 'package:hairdresser_project/modules/recomended_service/widgets/recomended_service_card.dart';
+import 'package:hairdresser_project/modules/service/nearby_places_services/widgets/nearby_places_card.dart';
 import 'package:hairdresser_project/screens/home/home_page.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
 
 // ignore: must_be_immutable
-class RecomendedServiceListView extends StatelessWidget {
-  RecomendedServiceListView({
+class NearbyPlacesModule extends StatelessWidget {
+  NearbyPlacesModule({
     super.key,
   });
   ServiceController serviceController = Get.put(ServiceController());
@@ -20,6 +20,8 @@ class RecomendedServiceListView extends StatelessWidget {
           child: Container(
             constraints: const BoxConstraints(maxHeight: double.infinity),
             decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [CustomColors.pink, CustomColors.white]),
                 border: Border.all(color: CustomColors.lightPink),
                 borderRadius: BorderRadius.circular(10)),
             child: Padding(
@@ -27,24 +29,23 @@ class RecomendedServiceListView extends StatelessWidget {
               child: Column(
                 children: [
                   const SeeDetails(
-                      detailsName: "Önerilenler", pageName: "/favoritesPage"),
+                      detailsName: "Size Yakın", pageName: "/favoritesPage"),
                   SizedBox(
-                      height: size.height * .40,
+                      height: size.height * .32,
+                       
                       child: serviceController.filteredServiceList.isNotEmpty
-                          ? Expanded(
-                              child: GridView.builder(
-                                  cacheExtent: 20,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2),
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: serviceController
-                                      .filteredServiceList.length,
-                                  itemBuilder: (context, index) =>
-                                      RecomendedServiceCard(
-                                          service: serviceController
-                                              .filteredServiceList[index])),
-                            )
+                          ? GridView.builder(
+                              cacheExtent: 20,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,childAspectRatio:0.5),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: serviceController
+                                  .filteredServiceList.length,
+                              itemBuilder: (context, index) =>
+                                  NearbyPlacesCard(
+                                      service: serviceController
+                                          .filteredServiceList[index]))
                           : const Center(
                               child: Text("liste boş"),
                             )),

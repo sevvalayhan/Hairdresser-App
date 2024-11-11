@@ -3,25 +3,38 @@ import 'package:hairdresser_project/models/service.dart';
 import 'package:http/http.dart' as http;
 
 class ServiceRepository {
-  final String baseUrl = '';
+  final String baseUrl = 'http://127.0.0.1:8000/barber/get-service';
 
-  
-  Future<List<Service>?> fetchAllServices() async {
+  Future<List<Service>> fetchAllServices() async {
+    print("-------------------");
     try {
-      final response = await http.get(Uri.parse(baseUrl));
-      if (response.statusCode == 200) {
-        List jsonResponse = json.decode(response.body);
-        return jsonResponse.map((data) => Service.fromJson(data)).toList();
-      } else {
-        print("Failed to load posts");
-        return null;
-      }
-    } catch (e) {
-      print("Error fetching posts: $e");
-      return null;
+  final response = await http.get(Uri.parse("${baseUrl}"));
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body); // veya kendi işlem yapınıza göre kullanın
+    print(data);
+  } else {
+    print("Başarısız istek: ${response.statusCode}");
+  }
+} catch (e) {
+  print("Hata: $e");
+}
+
+
+    final response = await http.get(Uri.parse("${baseUrl}get-service"));
+    print(response);
+    print(response.body);
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      var fetchedServiceData =
+          jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
+      List<Service> fechedServices =
+          fetchedServiceData.map((s) => Service.fromJson(s)).toList();
+      return fechedServices;
+    } else {
+      throw Exception((e) => "Failed to fetch services: ${e}");
     }
   }
-  
+
   Future<Service?> addService(Service service) async {
     try {
       final response = await http.post(

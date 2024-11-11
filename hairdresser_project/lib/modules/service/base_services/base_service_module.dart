@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hairdresser_project/controllers/service_controller.dart';
-import 'package:hairdresser_project/modules/service/widgets/service_card_with_appointment.dart';
+import 'package:hairdresser_project/modules/service/base_services/widgets/service_card_with_appointment.dart';
 
 // ignore: must_be_immutable
 class BaseServiceModule extends StatelessWidget {
