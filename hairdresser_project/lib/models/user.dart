@@ -1,45 +1,36 @@
+
 import 'package:hairdresser_project/models/address.dart';
 
 class User {
-  late String userName;
-  late String password;
-  late Address address;
-  late String permission;
-  late DateTime lastLogin;
-  late DateTime lastLogout;
-  late String ipAddress;
+  final int id;
+  final String email;
+  final String phoneNumber;
+  final List<Address> addresses;
 
   User({
-    required this.userName,
-    required this.password,
-    required this.address,
-    required this.permission,
-    required this.lastLogin,
-    required this.lastLogout,
-    required this.ipAddress,
+    required this.id,
+    required this.email,
+    required this.phoneNumber,
+    required this.addresses,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      userName: json['userName'],
-      password: json['password'],
-      address: Address.fromJson(json['address']),
-      permission: json['permission'],
-      lastLogin: DateTime.parse(json['lastLogin']),
-      lastLogout: DateTime.parse(json['lastLogout']),
-      ipAddress: json['ipAddress'],
+      id: json['id'],
+      email: json['email'],
+      phoneNumber: json['phone_number'],
+      addresses: (json['addresses'] as List)
+          .map((address) => Address.fromJson(address))
+          .toList(),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'userName': userName,
-      'password': password,
-      'permission': permission,
-      'lastLogin': lastLogin.toIso8601String(),
-      'lastLogout': lastLogout.toIso8601String(),
-      'ipAddress': ipAddress,
-      'address': address.toJson()
+      'id': id,
+      'email': email,
+      'phone_number': phoneNumber,
+      'addresses': addresses.map((address) => address.toJson()).toList(),
     };
   }
 }

@@ -1,52 +1,62 @@
 import 'package:hairdresser_project/models/user.dart';
 
 class Barber {
-  late User user;
-  late String barberName;
-  late String barberSurname;
-  late String bio;
-  late String email;
-  late String profileImageUrl;
-  late String identityCard;
-  late Status status;
-  late bool isImproved;
+  int id;
+  User user;
+  String identityNumber;
+  String firstName;
+  String lastName;
+  String bio;
+  String email;
+  String profileImage;
+  String identityCard;
+  int status;
+  //Status status
+  final bool isImproved;
 
   Barber({
+    required this.id,
     required this.user,
-    required this.barberName,
-    required this.barberSurname,
+    required this.identityNumber,
+    required this.firstName,
+    required this.lastName,
     required this.bio,
     required this.email,
-    required this.profileImageUrl,
+    required this.profileImage,
     required this.identityCard,
-    this.status = Status.normal,
-    this.isImproved = false,
+    required this.status,
+    required this.isImproved,
   });
 
   factory Barber.fromJson(Map<String, dynamic> json) {
     return Barber(
+      id: json['id'],
       user: User.fromJson(json['user']),
-      barberName: json['barberName'],
-      barberSurname: json['barberSurname'],
+      identityNumber: json['identity_number'],
+      firstName: json['first_name'],
+      lastName: json['last_name'],
       bio: json['bio'],
       email: json['email'],
-      profileImageUrl: json['profileImageUrl'],
-      identityCard: json['identityCard'],
-      status: Status.values[json['status']],
-      isImproved: json['isImproved'],
+      profileImage: json['profile_image'],
+      identityCard: json['identity_card'],
+      status: json['status'],
+      isImproved: json['is_improved'],
     );
   }
+
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'user': user.toJson(),
-      'barberName': barberName,
-      'barberSurname': barberSurname,
+      'identity_number': identityNumber,
+      'first_name': firstName,
+      'last_name': lastName,
       'bio': bio,
       'email': email,
-      'profileImageUrl': profileImageUrl,
-      'identityCard': identityCard,
-      'status': status.index,
-      'isImproved': isImproved,
+      'profile_image': profileImage,
+      'identity_card': identityCard,
+      'status': status,
+      'is_improved': isImproved,
     };
   }
 }

@@ -3,47 +3,52 @@ import 'package:hairdresser_project/models/category.dart';
 import 'package:hairdresser_project/models/service_image.dart';
 
 class Service {
-  late int id;
-  
-  late String serviceTitle;
-  late Barber barber;
-  late Category category;
-  late String description;
-  late double price;
-  late DateTime duration;
-  late ServiceImage serviceImage;
+  final int id;
+  final Barber barber;
+  final Category category;
+  final List<ServiceImage> serviceImages;
+  final String title;
+  final String description;
+  final int duration;
+  final double price;
 
-  Service(
-      {required this.barber,
-      required this.id,
-      required this.category,
-      required this.description,
-      required this.price,
-      required this.duration,
-      required this.serviceTitle,required this.serviceImage});
+  Service({
+    required this.barber,
+    required this.id,
+    required this.description,
+    required this.price,
+    required this.duration,
+    required this.title,
+    required this.serviceImages,
+    required this.category,
+  });
 
   factory Service.fromJson(Map<String, dynamic> json) {
+    List<ServiceImage> veri = (json['service_images'] as List)
+        .map((image) => ServiceImage(id: image['id'], image: image['image']))
+        .toList();
     return Service(
-      id:json['service_id'],
+      id: json['id'],
       barber: Barber.fromJson(json['barber']),
       category: Category.fromJson(json['category']),
       description: json['description'],
       price: json['price'],
-      duration: DateTime.parse(json['duration']),
-      serviceTitle: json['service_title'], serviceImage: ServiceImage.fromJson(json['service_image']),
+      duration: json['duration'],
+      title: json['title'],
+      serviceImages: veri,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'service_id':id,
+      'id': id,
       'barber': barber.toJson(),
       'category': category.toJson(),
       'description': description,
       'price': price,
-      'duration': duration.toIso8601String(),
-      'service_title':serviceTitle,
-      'service_image':serviceImage.toJson()
+      'duration': duration,
+      'title': title,
+      'service_images': serviceImages.map((image) => image.toJson()).toList()
     };
   }
 }

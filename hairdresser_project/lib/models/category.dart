@@ -1,33 +1,36 @@
+
 class Category {
-  late String key;
-  late String categoryName;
-  late String descriptions;
-  late DateTime createdAt;
-  late String imageUrl;
+  final int id;
+  final String categoryName;
+  final String? description;
+  final String createdAt;
+  final String categoryImage;
 
   Category({
-    
+    required this.id,
     required this.categoryName,
-    required this.descriptions,
+    this.description,
     required this.createdAt,
-    required this.imageUrl,
+    required this.categoryImage,
   });
 
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
-      categoryName: json['categoryName'],
-      descriptions: json['descriptions'],
-      createdAt: DateTime.parse(json['createdAt']),
-      imageUrl: json['imageUrl'],
+      id: json['id'],
+      categoryName: json['category_name'],
+      description: json['description'],
+      createdAt: json['created_at'],
+      categoryImage: json['category_image'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'categoryName': categoryName,
-      'descriptions': descriptions,
-      'createdAt': createdAt.toIso8601String(),
-      'imageUrl': imageUrl,
+      'id': id,
+      'category_name': categoryName,
+      'description': description,
+      'created_at': createdAt,
+      'category_image': categoryImage,
     };
   }
 }

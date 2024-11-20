@@ -1,52 +1,53 @@
-import 'package:hairdresser_project/models/hairdresser.dart';
+import 'package:hairdresser_project/models/barber.dart';
+import 'package:hairdresser_project/models/category.dart';
 import 'package:hairdresser_project/models/post_media.dart';
 
 class Post {
-  final int id;
-  final Hairdresser hairdresser;
-  final String content;
-  final String categoryName;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  int id;
+  Barber barber;
+  String content;
+  Category category;
+  DateTime createdAt;
+  DateTime updatedAt;
   List<PostMedia>? postMediaList;
 
   Post({
     required this.id,
     this.postMediaList,
-    required this.hairdresser,
-    required this.categoryName,
+    required this.barber,
+    required this.category,
     required this.content,
     required this.createdAt,
     required this.updatedAt,
   });
 
-
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
       id: json['id'],
-      postMediaList: json['postMediaList'] != null
-          ? (json['postMediaList'] as List)
+      postMediaList: json['post_media'] != null
+          ? (json['post_media'] as List)
               .map((item) => PostMedia.fromJson(item))
               .toList()
           : null,
-      hairdresser: Hairdresser.fromJson(json['hairdresser']),
-      categoryName: json['categoryName'],
+      barber: Barber.fromJson(json['barber']),
+      category: json['category'],
       content: json['content'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
+      createdAt: DateTime.parse(json['created_at']),
+      updatedAt: DateTime.parse(json['updated_at']),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'hairdresser': hairdresser.toJson(),
+      'hairdresser': barber.toJson(),
       'content': content,
-      'categoryName': categoryName,
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
-      'postMediaList': postMediaList?.map((media) => media.toJson()).toList(),
+      'category': category,
+      'created_at': createdAt.toIso8601String(),
+      'updated_at': updatedAt.toIso8601String(),
+      'post_media': postMediaList?.map((media) => media.toJson()).toList(),
     };
   }
 }
-enum MediaType {video,image}
+
+enum MediaType { video, image }

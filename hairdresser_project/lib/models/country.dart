@@ -1,29 +1,28 @@
-import 'package:hairdresser_project/models/province.dart';
-class Country {
-  late int id;
-  late int countryCode;
-  late String countryName;
-  late Province province;
 
-  Country({ 
+class Country {
+  final int id;
+  final int countryCode;
+  final String countryName;
+
+  Country({
+    required this.id,
     required this.countryCode,
     required this.countryName,
-    required this.province
   });
+
+  factory Country.fromJson(Map<String, dynamic> json) {
+    return Country(
+      id: json['id'],
+      countryCode: json['country_code'],
+      countryName: json['country_name'],
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {
-      'country_id': id,
-      'countryCode': countryCode,
-      'countryName': countryName,
-      'province':province.toJson()
+      'id': id,
+      'country_code': countryCode,
+      'country_name': countryName,
     };
-  }
-
-  Country.fromJson(Map<String, dynamic> json) {
-    id = json['country_id'];
-    countryCode = json['countryCode'];
-    countryName = json['countryName'];
-    province =  json['province'];
   }
 }
