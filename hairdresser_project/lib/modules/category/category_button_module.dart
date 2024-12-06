@@ -50,7 +50,7 @@ class CategoryButtonList extends StatelessWidget {
           print("post list lenght${postController.filteredPostList.length}");
           print(
               "service list lenght${serviceController.filteredServiceList.length}");
-          serviceController.filterService(categoryNames[index]);
+          // serviceController.filterService(categoryNames[index]);
           postController.filterPosts(categoryNames[index]);
           homePageController.selectedCategoryIndex.value = index;
         },

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hairdresser_project/constants/custom_text.dart';
-import 'package:hairdresser_project/models/service.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
+import 'package:hairdresser_project/models/service.dart';
 import 'package:hairdresser_project/widgets/custom_image_fetcher.dart';
 import 'package:hairdresser_project/widgets/favorite_button.dart';
 
@@ -28,11 +28,9 @@ class NearbyPlacesCard extends StatelessWidget {
               height: screenHeight / 7,
               width: screenWidth / 4,
               child: Stack(children: [
-                Positioned(child: serviceImage(service)),
-                const Positioned(
-                    top: 2,
-                    right: 5,
-                    child: FavoriteButton()),
+                Positioned(
+                    child: serviceImage(service.serviceImages[0].image)),
+                const Positioned(top: 2, right: 5, child: FavoriteButton()),
               ]),
             ),
             const SizedBox(
@@ -47,7 +45,7 @@ class NearbyPlacesCard extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    service.serviceTitle,
+                    service.title,
                     style: montserratSemiBold,
                   ),
                   Row(
@@ -56,24 +54,24 @@ class NearbyPlacesCard extends StatelessWidget {
                         Icons.location_on_rounded,
                         color: CustomColors.lightPink,
                       ),
-                      Text(
-                        "${service.barber.user.address.country.province.provinceName}, ${service.barber.user.address.country.province.district.districtName} ",
+                      Text( 
+                        "${service.barber.user.addresses}, ${service.barber.user.addresses[0].district.districtName} ",
                         style: montserratSmall,
                       ),
                     ],
                   ),
                   Row(
                     children: [
-                      CircleAvatar(
+                       CircleAvatar(
                         radius: 10,
                         child: CustomImageFetcher(
-                            imageUrl: service.barber.profileImageUrl),
+                            imageUrl:  service.barber.profileImage),
                       ),
                       const SizedBox(
                         width: 10,
                       ),
                       Text(
-                        "${service.barber.barberName} ${service.barber.barberSurname}",
+                       "${service.barber.firstName} ${service.barber.lastName}",
                         style: montserratSmall,
                       )
                     ],
@@ -89,7 +87,7 @@ class NearbyPlacesCard extends StatelessWidget {
     );
   }
 
-  Container serviceImage(Service service) {
+  Container serviceImage(String imageUrl) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
@@ -98,7 +96,7 @@ class NearbyPlacesCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: CustomImageFetcher(
-          imageUrl: service.serviceImage.imageUrl,
+          imageUrl: imageUrl,
         ),
       ),
     );

@@ -25,20 +25,20 @@ class RecomendedServiceCard extends StatelessWidget {
               child: SizedBox(
                   height: screenHeight / 7,
                   width: screenWidth / 2,
-                  child: serviceImage(service, screenHeight, screenWidth)),
+                  child: serviceImage(service.serviceImages[0].image, screenHeight, screenWidth)),
             ),
           ),
           const SizedBox(
             height: 10,
           ),
-          Text(service.serviceTitle)
+          Text(service.title)
         ],
       ),
     );
   }
 
   Container serviceImage(
-      Service service, double screenHeight, double screenWidth) {
+      String serviceImage, double screenHeight, double screenWidth) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
@@ -47,7 +47,7 @@ class RecomendedServiceCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: CachedNetworkImage(
-          imageUrl: service.serviceImage.imageUrl,
+          imageUrl: serviceImage,
           progressIndicatorBuilder: (context, url, downloadProgress) =>
               const AnimatedProgressIndicator(),
           errorWidget: (context, url, error) => const Icon(Icons.error),

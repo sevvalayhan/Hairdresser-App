@@ -4,11 +4,9 @@ import 'package:hairdresser_project/constants/static/custom_colors.dart';
 import 'package:hairdresser_project/routes/app_pages.dart';
 import 'package:hairdresser_project/routes/app_routes.dart';
 import 'package:hairdresser_project/screens/home/home_page.dart';
-
 void main() {
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override

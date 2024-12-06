@@ -53,7 +53,7 @@ class PostCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                              "${post.hairdresser.name} ${post.hairdresser.surname}",
+                              "${post.barber.firstName} ${post.barber.firstName}",
                               style: montserratSemiBold),
                           const SizedBox(
                             height: 5,

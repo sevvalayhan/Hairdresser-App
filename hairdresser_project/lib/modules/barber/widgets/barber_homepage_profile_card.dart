@@ -23,14 +23,14 @@ class BarberHomepageProfileCard extends StatelessWidget {
                         size: const Size.fromRadius(50),
                         child: CachedNetworkImage(
                             fit: BoxFit.cover,
-                            imageUrl: barber.profileImageUrl)))),
+                            imageUrl: barber.profileImage)))),
             const SizedBox(
               height: 10,
             ),
             Text(
-              (barber.barberName + barber.barberSurname).length > 10
-                  ? "${("${barber.barberName} ${barber.barberSurname}").substring(0, 10)}..."
-                  : "${barber.barberName} ${barber.barberSurname}",
+              (barber.firstName + barber.lastName).length > 10
+                  ? "${("${barber.firstName} ${barber.lastName}").substring(0, 10)}..."
+                  : "${barber.firstName} ${barber.lastName}",
               overflow: TextOverflow.ellipsis,
             ),
           

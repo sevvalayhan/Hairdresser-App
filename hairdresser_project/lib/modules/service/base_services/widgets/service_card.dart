@@ -5,15 +5,10 @@ import 'package:hairdresser_project/models/service.dart';
 import 'package:hairdresser_project/modules/post/widgets/post_media_widget.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
 
-class ServiceCard extends StatefulWidget {
+class ServiceCard extends StatelessWidget {
   const ServiceCard({super.key, required this.service});
   final Service service;
 
-  @override
-  State<ServiceCard> createState() => _ServiceCardState();
-}
-
-class _ServiceCardState extends State<ServiceCard> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -37,10 +32,10 @@ class _ServiceCardState extends State<ServiceCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(child: serviceImage(screenHeight)),
+                Expanded(child: serviceImage(service.serviceImages[0].image,screenHeight)),
                 const SizedBox(height: 5,),
                 Text(
-                  widget.service.serviceTitle,
+                  service.title,
                   style: montserratBold.copyWith(fontSize: 16),
                 ),
                 Row(
@@ -53,7 +48,7 @@ class _ServiceCardState extends State<ServiceCard> {
                     const SizedBox(width: 4),
                     Expanded(
                       child: Text(
-                        "${widget.service.barber.barberName} ${widget.service.barber.barberSurname}",
+                       "",// "${service.barber.firstName} ${service.barber.lastName}",
                         style: montserratMedium.copyWith(
                           fontSize: 10,
                           color: Colors.grey.shade700,
@@ -86,7 +81,7 @@ class _ServiceCardState extends State<ServiceCard> {
     );
   }
 
-  Container serviceImage(double screenHeight) {
+  Container serviceImage(String imageUrl,double screenHeight) {
     return Container(
       height: screenHeight / 5,
       width: double.infinity,
@@ -98,7 +93,7 @@ class _ServiceCardState extends State<ServiceCard> {
         borderRadius: BorderRadius.circular(12),
         child: CachedNetworkImage(
           imageUrl:
-              "https://images.unsplash.com/photo-1521747116042-5a810fda9664",
+              imageUrl,
           progressIndicatorBuilder: (context, url, downloadProgress) =>
               const AnimatedProgressIndicator(),
           errorWidget: (context, url, error) => const Icon(Icons.error),
