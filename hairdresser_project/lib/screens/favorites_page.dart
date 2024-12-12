@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hairdresser_project/widgets/custom_navigation_bar.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
@@ -11,6 +10,6 @@ class FavoritesPage extends StatefulWidget {
 class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(bottomNavigationBar: CustomNavigationBar(),);
+    return const Text('Appointment ');
   }
 }

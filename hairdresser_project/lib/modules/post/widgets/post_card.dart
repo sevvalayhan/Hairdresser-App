@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hairdresser_project/constants/custom_text.dart';
 import 'package:hairdresser_project/models/post.dart';
-import 'package:hairdresser_project/modules/post/widgets/post_media_widget.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
+import 'package:hairdresser_project/modules/post/widgets/post_media_widget.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:readmore/readmore.dart';
 
@@ -30,61 +30,62 @@ class PostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String createdAt = formatDate(post.createdAt);
-    return GestureDetector(
-      onTap: () {
-        print("card");
-      },
-      child: Card(
-        color: Colors.white,
-        child:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.person),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                              "${post.barber.firstName} ${post.barber.firstName}",
-                              style: montserratSemiBold),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            createdAt,
-                            style: montserratSmall,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  IconButton(
-                      onPressed: () {}, icon: const Icon(Icons.more_horiz)),
-                ]),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              postContentText(),
-              Padding(
-                padding: EdgeInsets.zero,
-                child: PostMediaWidget(
-                  post: post,
+    return Container(
+      decoration: BoxDecoration(
+          color: CustomColors.white,
+          border: Border.all(
+              color: CustomColors.black.withOpacity(.3), width: .5),
+          borderRadius: BorderRadius.circular(12)),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.person),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                            "${post.barber.firstName} ${post.barber.firstName}",
+                            style: montserratSemiBold),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          createdAt,
+                          style: montserratSmall,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ),
-              
-           
-            ],
-          ),
-          Padding(
+                IconButton(
+                    onPressed: () {print( "post Detail");}, icon: const Icon(Icons.more_horiz)),
+              ]),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            postContentText(),
+            post.postMediaList.isNotEmpty
+                ? Padding(
+                    padding: EdgeInsets.zero,
+                    child: PostMediaWidget(
+                      post: post,
+                    ),
+                  )
+                : const SizedBox()
+          ],
+        ),
+        GestureDetector(
+           onTap: () {},
+          child: Padding(
             padding: const EdgeInsets.all(14),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -92,14 +93,16 @@ class PostCard extends StatelessWidget {
                   Row(
                     children: [
                       IconButton(
-                          onPressed: () {}, icon: const Icon(Icons.favorite_border)
+                          onPressed: () {},
+                          icon: const Icon(Icons.favorite_border)
                           // : Icon(
                           //     Icons.favorite,
                           //     color: CustomColors.lightPink,
                           //   ),
                           ),
                       IconButton(
-                          onPressed: () {}, icon: const Icon(Icons.mode_comment_outlined)),
+                          onPressed: () {},
+                          icon: const Icon(Icons.mode_comment_outlined)),
                       IconButton(
                           onPressed: () {}, icon: const Icon(Icons.share)),
                     ],
@@ -110,11 +113,11 @@ class PostCard extends StatelessWidget {
                   )
                 ]),
           ),
-          const SizedBox(
-            height: 5,
-          )
-        ]),
-      ),
+        ),
+        const SizedBox(
+          height: 5,
+        )
+      ]),
     );
   }
 

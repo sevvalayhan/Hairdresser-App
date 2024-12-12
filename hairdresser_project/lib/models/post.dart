@@ -9,11 +9,11 @@ class Post {
   Category category;
   DateTime createdAt;
   DateTime updatedAt;
-  List<PostMedia>? postMediaList;
+  List<PostMedia> postMediaList;
 
   Post({
     required this.id,
-    this.postMediaList,
+    this.postMediaList = const <PostMedia>[],
     required this.barber,
     required this.category,
     required this.content,
@@ -24,11 +24,9 @@ class Post {
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
       id: json['id'],
-      postMediaList: json['post_media'] != null
-          ? (json['post_media'] as List)
-              .map((item) => PostMedia.fromJson(item))
-              .toList()
-          : null,
+      postMediaList: (json['post_media'] as List)
+          .map((item) => PostMedia.fromJson(item))
+          .toList(),
       barber: Barber.fromJson(json['barber']),
       category: json['category'],
       content: json['content'],

@@ -1,118 +1,175 @@
 import 'package:get/get.dart';
+import 'package:hairdresser_project/models/address.dart';
+import 'package:hairdresser_project/models/barber.dart';
+import 'package:hairdresser_project/models/category.dart';
+import 'package:hairdresser_project/models/country.dart';
+import 'package:hairdresser_project/models/district.dart';
 import 'package:hairdresser_project/models/post.dart';
+import 'package:hairdresser_project/models/post_media.dart';
+import 'package:hairdresser_project/models/province.dart';
+import 'package:hairdresser_project/models/user.dart';
 import 'package:hairdresser_project/repositories/post_repository.dart';
 
 class PostController extends GetxController {
   final _postList = <Post>[].obs;
   final _fitleredPostList = <Post>[].obs;
 
-  // final List<Post> posts = [
-  //   Post(
-  //     id: 1,
-  //     createdAt: DateTime.now(),
-  //     updatedAt: DateTime.now(),
-  //     postMediaList: [
-  //       PostMedia(
-  //           mediaUrl:
-  //               "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
-  //           mediaType: MediaType.image),
-  //       PostMedia(
-  //           mediaUrl: "assets/videos/video.mp4", mediaType: MediaType.video),
-  //       PostMedia(
-  //           mediaUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-  //           mediaType: MediaType.video),
-  //     ],
-  //     hairdresser: Hairdresser(name: "Şevval", surname: "Ayhan"),
-  //     categoryName: "Cilt Bakımı",
-  //     content:
-  //         "Where can I get some?There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.",
-  //   ),
-  //   Post(
-  //     id: 1,
-  //     createdAt: DateTime.now(),
-  //     updatedAt: DateTime.now(),
-  //     postMediaList: [
-  //       PostMedia(
-  //           mediaUrl:
-  //               "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
-  //           mediaType: MediaType.image),
-  //       PostMedia(
-  //           mediaUrl: "assets/videos/video.mp4", mediaType: MediaType.video),
-  //       PostMedia(
-  //           mediaUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-  //           mediaType: MediaType.video),
-  //     ],
-  //     hairdresser: Hairdresser(name: "Şevval", surname: "Ayhan"),
-  //     categoryName: "Cilt Bakımı",
-  //     content:
-  //         "Where can I get some?There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.",
-  //   ),
-  //   Post(
-  //     id: 1,
-  //     createdAt: DateTime.now(),
-  //     updatedAt: DateTime.now(),
-  //     postMediaList: [
-  //       PostMedia(
-  //           mediaUrl:
-  //               "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
-  //           mediaType: MediaType.image),
-  //       PostMedia(
-  //           mediaUrl: "assets/videos/video.mp4", mediaType: MediaType.video),
-  //       PostMedia(
-  //           mediaUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-  //           mediaType: MediaType.video),
-  //     ],
-  //     hairdresser: Hairdresser(name: "Şevval", surname: "Ayhan"),
-  //     categoryName: "Cilt Bakımı",
-  //     content:
-  //         "Where can I get some?There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.",
-  //   ),
-  //   Post(
-  //     id: 1,
-  //     createdAt: DateTime.now(),
-  //     updatedAt: DateTime.now(),
-  //     postMediaList: [
-  //       PostMedia(
-  //           mediaUrl:
-  //               "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
-  //           mediaType: MediaType.image),
-  //       PostMedia(
-  //           mediaUrl: "assets/videos/video.mp4", mediaType: MediaType.video),
-  //       PostMedia(
-  //           mediaUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-  //           mediaType: MediaType.video),
-  //     ],
-  //     hairdresser: Hairdresser(name: "Şevval", surname: "Ayhan"),
-  //     categoryName: "Makyaj",
-  //     content:
-  //         "Where can I get some?There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.",
-  //   ),
-  // ];
+  final List<Post> posts = [
+    Post(
+        postMediaList: [
+          PostMedia(
+              id: 1,
+              mediaUrl:
+                  "http://127.0.0.1:8000/media/barber_profile_images/WhatsApp_G%C3%B6rsel_2024-11-12_saat_15.44.54_11e7f5fe.jpg",
+              mediaType: MediaType.image)
+        ],
+        id: 1,
+        barber: Barber(
+            id: 1,
+            user: User(
+                id: 1,
+                email: "email",
+                phoneNumber: "phoneNumber",
+                addresses: [
+                  Address(
+                      id: 1,
+                      district: District(
+                          id: 1,
+                          districtName: "districtName",
+                          province: Province(
+                              id: 1,
+                              provinceName: "provinceName",
+                              country: Country(
+                                  id: 1,
+                                  countryCode: 1,
+                                  countryName: "countryName"))),
+                      addressType: 1,
+                      buildingNo: "buildingNo",
+                      street: "street",
+                      region: "region",
+                      postalCode: 1232,
+                      description: "description",
+                      coordinate: "coordinate",
+                      userId: 1)
+                ]),
+            identityNumber: "identitiyNumber",
+            firstName: "firstName",
+            lastName: "lastName",
+            bio: "bio",
+            email: "email",
+            profileImage: "profileImage",
+            identityCard: "identityCard",
+            status: 1,
+            shopName: "shopName",
+            isImproved: true),
+        category: Category(
+            id: 1,
+            categoryName: "categoryName",
+            createdAt: "DateTime.now()",
+            categoryImage: "categoryImage"),
+        content: "content",
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now()),
+    Post(
+        //    postMediaList: [PostMedia(id: 1, mediaUrl: "", mediaType: MediaType.image)],
 
-  // final List<Post> posts = [
-  //   Post(
-  //       id: 1,
-  //       barber: Barber(
-  //           user: User(
-  //               id: 1,       
-  //               email: "email",
-  //               phoneNumber: "phoneNumber"),
-  //           firstName: "firstName",
-  //           lastName: "lastName",
-  //           bio: "bio",
-  //           email: "email",
-  //           profileImage: "profileImage",
-  //           identityCard: "identityCard", identityNumber: ''),
-  //       category: Category(
-  //           id: 1,
-  //           categoryName: "categoryName",
-  //           description: "description",
-  //           imageUrl: "imageUrl"),
-  //       content: "content",
-  //       createdAt: DateTime.now(),
-  //       updatedAt: DateTime.now())
-  // ];
-  List<Post> posts = []; 
+        id: 1,
+        barber: Barber(
+            id: 1,
+            user: User(
+                id: 1,
+                email: "email",
+                phoneNumber: "phoneNumber",
+                addresses: [
+                  Address(
+                      id: 1,
+                      district: District(
+                          id: 1,
+                          districtName: "districtName",
+                          province: Province(
+                              id: 1,
+                              provinceName: "provinceName",
+                              country: Country(
+                                  id: 1,
+                                  countryCode: 1,
+                                  countryName: "countryName"))),
+                      addressType: 1,
+                      buildingNo: "buildingNo",
+                      street: "street",
+                      region: "region",
+                      postalCode: 1232,
+                      description: "description",
+                      coordinate: "coordinate",
+                      userId: 1)
+                ]),
+            identityNumber: "identitiyNumber",
+            firstName: "firstName",
+            lastName: "lastName",
+            bio: "bio",
+            email: "email",
+            profileImage: "profileImage",
+            identityCard: "identityCard",
+            status: 1,
+            shopName: "shopName",
+            isImproved: true),
+        category: Category(
+            id: 1,
+            categoryName: "categoryName",
+            createdAt: "DateTime.now()",
+            categoryImage: "categoryImage"),
+        content: "content",
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now()),
+    Post(
+        id: 1,
+        barber: Barber(
+            id: 1,
+            user: User(
+                id: 1,
+                email: "email",
+                phoneNumber: "phoneNumber",
+                addresses: [
+                  Address(
+                      id: 1,
+                      district: District(
+                          id: 1,
+                          districtName: "districtName",
+                          province: Province(
+                              id: 1,
+                              provinceName: "provinceName",
+                              country: Country(
+                                  id: 1,
+                                  countryCode: 1,
+                                  countryName: "countryName"))),
+                      addressType: 1,
+                      buildingNo: "buildingNo",
+                      street: "street",
+                      region: "region",
+                      postalCode: 1232,
+                      description: "description",
+                      coordinate: "coordinate",
+                      userId: 1)
+                ]),
+            identityNumber: "identitiyNumber",
+            firstName: "firstName",
+            lastName: "lastName",
+            bio: "bio",
+            email: "email",
+            profileImage: "profileImage",
+            identityCard: "identityCard",
+            status: 1,
+            shopName: "shopName",
+            isImproved: true),
+        category: Category(
+            id: 1,
+            categoryName: "categoryName",
+            createdAt: "DateTime.now()",
+            categoryImage: "categoryImage"),
+        content: "content",
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now())
+  ];
+
   List<Post> get postList => _postList;
   set postList(List<Post> value) {
     _postList.assignAll(value);
@@ -125,7 +182,7 @@ class PostController extends GetxController {
 
   @override
   void onReady() async {
-   // await fetchPosts();
+    //await fetchPosts();
     postList.assignAll(posts);
     filteredPostList.assignAll(postList);
   }
@@ -178,13 +235,13 @@ class PostController extends GetxController {
     }
   }
 
-  void filterPosts(String categoryName) {
-    if (categoryName == "Hepsi") {
-      filteredPostList.assignAll(postList);
-    } else {
-      filteredPostList.assignAll(postList
-          .where((post) => post.category.categoryName == (categoryName))
-          .toList());
-    }
-  }
+  // void filterPosts(String categoryName) {
+  //   if (categoryName == "Hepsi") {
+  //     filteredPostList.assignAll(postList);
+  //   } else {
+  //     filteredPostList.assignAll(postList
+  //         .where((post) => post.category.categoryName == (categoryName))
+  //         .toList());
+  //   }
+  // }
 }

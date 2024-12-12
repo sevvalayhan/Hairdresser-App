@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hairdresser_project/constants/custom_text.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
 import 'package:hairdresser_project/models/service.dart';
+import 'package:hairdresser_project/utils/responsive_mesurement.dart';
+import 'package:hairdresser_project/widgets/barber_address_with_pin_icon.dart';
 import 'package:hairdresser_project/widgets/custom_image_fetcher.dart';
 
 class ServiceCardWithAppointmentButton extends StatelessWidget {
@@ -10,11 +12,8 @@ class ServiceCardWithAppointmentButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.sizeOf(context).height;
-    double screenWidth = MediaQuery.sizeOf(context).width;
-
     return SizedBox(
-      height: screenHeight / 5,
+      height: ResponsiveMesurement.asHeight(context, 20),
       width: double.infinity,
       child: Container(
           decoration: BoxDecoration(
@@ -24,17 +23,16 @@ class ServiceCardWithAppointmentButton extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                serviceImageCard(service.serviceImages[0].image,
-                    screenHeight, screenWidth),
-                const SizedBox(width: 8),
-                cardBody(screenHeight, screenWidth),
+                serviceImage(context),
+                const SizedBox(width: 10),
+                cardBody(context),
               ],
             ),
           )),
     );
   }
 
-  Expanded cardBody(double screenHeight, double screenWidth) {
+  Expanded cardBody(BuildContext context) {
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,35 +63,9 @@ class ServiceCardWithAppointmentButton extends StatelessWidget {
               ),
             ],
           ),
-          Row(
-            children: [
-              Icon(
-                Icons.pin_drop_outlined,
-                color: CustomColors.black,
-              ),
-              Expanded(
-                child: Text(
-               "",//   "${service.barber.user.address!.country.province.provinceName}, ${service.barber.user.address!.country.province.district.districtName}",
-                  style: montserratSmall,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              const CircleAvatar(
-                radius: 10,
-                child:
-                    CustomImageFetcher(imageUrl: "")//service.barber.profileImage),
-              ),
-              const SizedBox(width: 10),
-              Text(
-           "",//     "${service.barber.firstName} ${service.barber.lastName}",
-                style: montserratSmall,
-              )
-            ],
-          ),
+          BarberAddressWithPinIcon(barber: service.barber, style: montserratSmall, locationIcon:const Icon(Icons.pin_drop_outlined), iconSize: 15),
+         
+          barberInformation(context),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -101,7 +73,7 @@ class ServiceCardWithAppointmentButton extends StatelessWidget {
                   style: montserratSmall.copyWith(
                     color: CustomColors.lightPink,
                   )),
-              appointmentButton(screenHeight, screenWidth),
+              appointmentButton(context),
             ],
           ),
         ],
@@ -109,28 +81,44 @@ class ServiceCardWithAppointmentButton extends StatelessWidget {
     );
   }
 
-  Container serviceImageCard(
-      String imageUrl, double screenHeight, double screenWidth) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(10)),
-      constraints: BoxConstraints(
-          minHeight: screenHeight / 5, minWidth: screenWidth / 3),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+  Row barberInformation(BuildContext context) {
+    return Row(
+          children: [
+            SizedBox(
+              width: ResponsiveMesurement.asHeight(context, 3),
+              height: ResponsiveMesurement.asHeight(context, 3),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child:
+                    CustomImageFetcher(imageUrl: service.barber.profileImage),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Text(
+              "${service.barber.firstName} ${service.barber.lastName}",
+              style: montserratSmall,
+            )
+          ],
+        );
+  }
+
+  SizedBox serviceImage(BuildContext context) {
+    return SizedBox(
+      height: ResponsiveMesurement.asHeight(context, 20),
+      width: ResponsiveMesurement.asWidth(context, 30),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
         child: CustomImageFetcher(
-          imageUrl: imageUrl,
+          imageUrl: service.serviceFirstImage,
         ),
       ),
     );
   }
 
-  SizedBox appointmentButton(double screenHeight, double screenWidth) {
+  SizedBox appointmentButton(BuildContext context) {
     return SizedBox(
-        height: screenHeight / 25,
-        width: screenWidth / 3.5,
+        height: ResponsiveMesurement.asHeight(context, 4),
+        width: ResponsiveMesurement.asWidth(context, 25),
         child: FloatingActionButton(
             onPressed: () {},
             shape: RoundedRectangleBorder(

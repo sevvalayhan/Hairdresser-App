@@ -14,11 +14,11 @@ class BaseServiceModule extends StatelessWidget {
       () => SliverList(
           delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
-        if (serviceController.filteredServiceList.isNotEmpty) {
+        if (serviceController.serviceList.isNotEmpty) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: ServiceCardWithAppointmentButton(
-              service: serviceController.filteredServiceList[index],
+              service: serviceController.serviceList[index],
             ),
           );
         } else {
@@ -27,9 +27,9 @@ class BaseServiceModule extends StatelessWidget {
           );
         }
       },
-              childCount: serviceController.filteredServiceList.length > 3
+              childCount: serviceController.serviceList.length > 3
                   ? 3
-                  : serviceController.filteredServiceList.length)),
+                  : serviceController.serviceList.length)),
     );
   }
 }

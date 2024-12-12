@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hairdresser_project/controllers/service_controller.dart';
 import 'package:hairdresser_project/modules/service/nearby_places_services/widgets/nearby_places_card.dart';
-import 'package:hairdresser_project/screens/home/home_page.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
+import 'package:hairdresser_project/utils/responsive_mesurement.dart';
+import 'package:hairdresser_project/widgets/see_details.dart';
 
 // ignore: must_be_immutable
 class NearbyPlacesModule extends StatelessWidget {
@@ -31,21 +32,19 @@ class NearbyPlacesModule extends StatelessWidget {
                   const SeeDetails(
                       detailsName: "Size Yakın", pageName: "/favoritesPage"),
                   SizedBox(
-                      height: size.height * .32,
-                       
-                      child: serviceController.filteredServiceList.isNotEmpty
+                      height: ResponsiveMesurement.asHeight(context, 36),
+                      child: serviceController.serviceList.isNotEmpty
                           ? GridView.builder(
                               cacheExtent: 20,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,childAspectRatio:0.5),
+                                      crossAxisCount: 2, childAspectRatio: 0.5),
                               scrollDirection: Axis.horizontal,
-                              itemCount: serviceController
-                                  .filteredServiceList.length,
-                              itemBuilder: (context, index) =>
-                                  NearbyPlacesCard(
-                                      service: serviceController
-                                          .filteredServiceList[index]))
+                              itemCount: serviceController.serviceList.length,
+                              itemBuilder: (context, index) => NearbyPlacesCard(
+                                  service:
+                                      serviceController.serviceList[index]),
+                            )
                           : const Center(
                               child: Text("liste boş"),
                             )),

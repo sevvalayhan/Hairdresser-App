@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hairdresser_project/constants/custom_text.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
 import 'package:hairdresser_project/models/service.dart';
+import 'package:hairdresser_project/utils/responsive_mesurement.dart';
+import 'package:hairdresser_project/widgets/barber_address_with_pin_icon.dart';
 import 'package:hairdresser_project/widgets/custom_image_fetcher.dart';
 import 'package:hairdresser_project/widgets/favorite_button.dart';
+import 'package:hairdresser_project/widgets/service_score.dart';
 
 class NearbyPlacesCard extends StatelessWidget {
   const NearbyPlacesCard({super.key, required this.service});
@@ -11,9 +14,6 @@ class NearbyPlacesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
@@ -25,16 +25,13 @@ class NearbyPlacesCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: screenHeight / 7,
-              width: screenWidth / 4,
               child: Stack(children: [
-                Positioned(
-                    child: serviceImage(service.serviceImages[0].image)),
+                Positioned(child: serviceImageContainer(context)),
                 const Positioned(top: 2, right: 5, child: FavoriteButton()),
               ]),
             ),
             const SizedBox(
-              width: 5,
+              width: 10,
             ),
             Expanded(
               child: Column(
@@ -48,36 +45,17 @@ class NearbyPlacesCard extends StatelessWidget {
                     service.title,
                     style: montserratSemiBold,
                   ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.location_on_rounded,
-                        color: CustomColors.lightPink,
-                      ),
-                      Text( 
-                        "${service.barber.user.addresses}, ${service.barber.user.addresses[0].district.districtName} ",
-                        style: montserratSmall,
-                      ),
-                    ],
+                  BarberAddressWithPinIcon(
+                    iconSize: 15,
+                    barber: service.barber,
+                    locationIcon: Icon(
+                      Icons.location_on_rounded,
+                      color: CustomColors.lightPink,
+                    ),
+                    style: montserratSmall,
                   ),
-                  Row(
-                    children: [
-                       CircleAvatar(
-                        radius: 10,
-                        child: CustomImageFetcher(
-                            imageUrl:  service.barber.profileImage),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                       "${service.barber.firstName} ${service.barber.lastName}",
-                        style: montserratSmall,
-                      )
-                    ],
-                  ),
-                  ServiceScore(
-                      screenWidth: screenWidth, screenHeight: screenHeight)
+                  barberInformation(context),
+                  const ServiceScore()
                 ],
               ),
             ),
@@ -87,54 +65,34 @@ class NearbyPlacesCard extends StatelessWidget {
     );
   }
 
-  Container serviceImage(String imageUrl) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: Colors.grey.shade200,
-      ),
+  Row barberInformation(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(
+          width: ResponsiveMesurement.asHeight(context, 2.5),
+          height: ResponsiveMesurement.asHeight(context, 2.5),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: CustomImageFetcher(imageUrl: service.barber.profileImage),
+          ),
+        ),
+        const SizedBox(width: 2),
+        Text(
+          "${service.barber.firstName} ${service.barber.lastName}",
+          style: montserratSmall,
+        )
+      ],
+    );
+  }
+
+  SizedBox serviceImageContainer(BuildContext context) {
+    return SizedBox(
+      height: double.infinity, //ResponsiveMesurement.asHeight(context, 25),
+      width: ResponsiveMesurement.asWidth(context, 28),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: CustomImageFetcher(
-          imageUrl: imageUrl,
-        ),
-      ),
-    );
-  }
-}
-
-class ServiceScore extends StatelessWidget {
-  const ServiceScore({
-    super.key,
-    required this.screenWidth,
-    required this.screenHeight,
-  });
-
-  final double screenWidth;
-  final double screenHeight;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: screenWidth / 9,
-      height: screenHeight / 40,
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            color: CustomColors.lila.withOpacity(.5)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.star,
-              color: CustomColors.yellow,
-              size: 15,
-            ),
-            Text(
-              "4.5",
-              style: montserratSmall,
-            ) //puan gelecek
-          ],
+          imageUrl: service.serviceFirstImage,
         ),
       ),
     );

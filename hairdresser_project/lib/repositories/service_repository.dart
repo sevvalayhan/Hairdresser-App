@@ -6,7 +6,7 @@ class ServiceRepository {
   final String baseUrl = 'http://127.0.0.1:8000/barber/';
 
   Future<List<Service>?> fetchAllServices() async {
-    final url = Uri.parse('${baseUrl}get-service'); // API endpoint
+    final url = Uri.parse('${baseUrl}get-service');
     try {
       final response = await http.get(url);
 
@@ -19,6 +19,26 @@ class ServiceRepository {
       }
     } catch (error) {
       throw Exception('Error fetching services: $error');
+    }
+  }
+
+  Future<List<Service>?> fetchSearchServices(String searchText) async {
+    final url = Uri.parse('${baseUrl}get-service');
+    try {
+      final response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({'search': searchText}),
+      ); 
+      if (response.statusCode == 200) {
+        final List<dynamic> jsonData =
+            jsonDecode((utf8.decode(response.bodyBytes)));
+        return jsonData.map((service) => Service.fromJson(service)).toList();
+      } else {
+        throw Exception('Failed to load search services');
+      }
+    } catch (error) {
+      throw Exception('Error fetching search services: $error');
     }
   }
 

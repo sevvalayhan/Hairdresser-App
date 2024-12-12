@@ -11,6 +11,7 @@ class Barber {
   String profileImage;
   String identityCard;
   int status;
+  String shopName;
   //Status status
   final bool isImproved;
 
@@ -25,6 +26,7 @@ class Barber {
     required this.profileImage,
     required this.identityCard,
     required this.status,
+    required this.shopName,
     required this.isImproved,
   });
 
@@ -40,6 +42,7 @@ class Barber {
       profileImage: json['profile_image'],
       identityCard: json['identity_card'],
       status: json['status'],
+      shopName: json['shop_name'],
       isImproved: json['is_improved'],
     );
   }

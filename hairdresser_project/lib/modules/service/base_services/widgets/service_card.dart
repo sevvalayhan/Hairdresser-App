@@ -12,7 +12,7 @@ class ServiceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height; 
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -32,8 +32,10 @@ class ServiceCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(child: serviceImage(service.serviceImages[0].image,screenHeight)),
-                const SizedBox(height: 5,),
+                Expanded(child: serviceImageContainer(screenHeight)),
+                const SizedBox(
+                  height: 5,
+                ),
                 Text(
                   service.title,
                   style: montserratBold.copyWith(fontSize: 16),
@@ -48,7 +50,7 @@ class ServiceCard extends StatelessWidget {
                     const SizedBox(width: 4),
                     Expanded(
                       child: Text(
-                       "",// "${service.barber.firstName} ${service.barber.lastName}",
+                        "", // "${service.barber.firstName} ${service.barber.lastName}",
                         style: montserratMedium.copyWith(
                           fontSize: 10,
                           color: Colors.grey.shade700,
@@ -57,9 +59,10 @@ class ServiceCard extends StatelessWidget {
                       ),
                     ),
                   ],
-                  
                 ),
-                const SizedBox(height: 5,),
+                const SizedBox(
+                  height: 5,
+                ),
                 Text(
                   "60 dk • 500 TL",
                   style: montserratMedium.copyWith(
@@ -81,7 +84,7 @@ class ServiceCard extends StatelessWidget {
     );
   }
 
-  Container serviceImage(String imageUrl,double screenHeight) {
+  Container serviceImageContainer(double screenHeight) {
     return Container(
       height: screenHeight / 5,
       width: double.infinity,
@@ -92,8 +95,7 @@ class ServiceCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: CachedNetworkImage(
-          imageUrl:
-              imageUrl,
+          imageUrl: service.serviceFirstImage ,
           progressIndicatorBuilder: (context, url, downloadProgress) =>
               const AnimatedProgressIndicator(),
           errorWidget: (context, url, error) => const Icon(Icons.error),

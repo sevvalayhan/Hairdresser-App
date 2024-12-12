@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hairdresser_project/models/service.dart';
 import 'package:hairdresser_project/modules/post/widgets/post_media_widget.dart';
+import 'package:hairdresser_project/utils/responsive_mesurement.dart';
 
 class RecomendedServiceCard extends StatelessWidget {
   const RecomendedServiceCard({super.key, required this.service});
@@ -23,9 +24,9 @@ class RecomendedServiceCard extends StatelessWidget {
               ),
               elevation: 5,
               child: SizedBox(
-                  height: screenHeight / 7,
-                  width: screenWidth / 2,
-                  child: serviceImage(service.serviceImages[0].image, screenHeight, screenWidth)),
+                  height: ResponsiveMesurement.asHeight(context, 30),
+                  width:ResponsiveMesurement.asWidth(context, 40),
+                  child: serviceImage()),
             ),
           ),
           const SizedBox(
@@ -37,22 +38,15 @@ class RecomendedServiceCard extends StatelessWidget {
     );
   }
 
-  Container serviceImage(
-      String serviceImage, double screenHeight, double screenWidth) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: Colors.grey.shade200,
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: CachedNetworkImage(
-          imageUrl: serviceImage,
-          progressIndicatorBuilder: (context, url, downloadProgress) =>
-              const AnimatedProgressIndicator(),
-          errorWidget: (context, url, error) => const Icon(Icons.error),
-          fit: BoxFit.cover,
-        ),
+  ClipRRect serviceImage() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: CachedNetworkImage(
+        imageUrl: service.serviceFirstImage,
+        progressIndicatorBuilder: (context, url, downloadProgress) =>
+            const AnimatedProgressIndicator(),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
+        fit: BoxFit.cover,
       ),
     );
   }

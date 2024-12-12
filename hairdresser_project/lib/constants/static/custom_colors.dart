@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class CustomColors {
   static Color white = Colors.white;
   static Color black = Colors.black87;
+  static Color grey = const Color.fromARGB(177, 178, 175, 175);
   static Color yellow = Colors.amberAccent;
   static Color pink = const Color.fromARGB(255, 255, 113, 172);
   static Color lightGreen = const Color.fromRGBO(144, 255, 112, 1.0);
