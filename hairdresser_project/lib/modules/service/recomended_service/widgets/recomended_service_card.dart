@@ -10,9 +10,6 @@ class RecomendedServiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -32,7 +29,7 @@ class RecomendedServiceCard extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Text(service.title)
+          Text(service.title,maxLines: 1,overflow: TextOverflow.ellipsis,)
         ],
       ),
     );

@@ -19,9 +19,6 @@ class SearchPageController extends GetxController {
     "Dürüm",
     "Çay",
   ].obs;
-
-  ServiceController serviceController = Get.put(ServiceController());
-  BarberController barberController = Get.put(BarberController());
   var textController = TextEditingController().obs;
   Rx<bool> isSearchBarEmpty = true.obs;
   Rx<bool> showMore = false.obs;
@@ -42,15 +39,21 @@ class SearchPageController extends GetxController {
     searchHistoryList.assignAll(<String>[]);
   }
 
-  void updateSearchServiceList() {
+  ServiceController serviceController = Get.put(ServiceController());
+  BarberController barberController = Get.put(BarberController());
+
+  Future<void> updateSearchList() async {
     String query = cleanSearchQuery(textController.value.text);
     if (query.isNotEmpty) {
-      serviceController.fetchSearchServices(query);
-      barberController.fetchSearchBarbers(query);
+      await serviceController.fetchSearchServices(query);
+      await barberController.fetchSearchBarbers(query);
     }
   }
 
   String cleanSearchQuery(String query) {
-    return query.trim().replaceAll(RegExp(r'\s+'), ' ');
+    return query
+        .trim()
+        .replaceAll(RegExp(r',+'), '')
+        .replaceAll(RegExp(r'\s+'), '');
   }
 }

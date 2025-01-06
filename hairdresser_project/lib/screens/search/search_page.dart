@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:hairdresser_project/constants/custom_text.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
 import 'package:hairdresser_project/controllers/search_page_controller.dart';
-import 'package:hairdresser_project/modules/search/search_module.dart';
-import 'package:hairdresser_project/modules/service/search_servies/search_service_module.dart';
+import 'package:hairdresser_project/modules/search/search_page/search_page_module.dart';
 import 'package:hairdresser_project/navigation/navigation_key.dart';
+import 'package:hairdresser_project/widgets/back_page_button.dart';
 import 'package:hairdresser_project/widgets/home_widgets/custom_search_bar.dart';
 
 // ignore: must_be_immutable
@@ -24,7 +24,9 @@ class SearchPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  backHomePageButton(),
+                  BackPageButton(
+                      route: '/homePage',
+                      navigationKey: NavigationKey.home.index),
                   CustomSearchBar(),
                 ],
               ),
@@ -38,21 +40,9 @@ class SearchPage extends StatelessWidget {
                       searchHistoryListElements()
                     ],
                   )
-                :   SearchModule()
+                : SearchPageModule()
           ],
         ),
-      ),
-    );
-  }
-
-  IconButton backHomePageButton() {
-    return IconButton(
-      onPressed: () {
-        Get.toNamed('/homePage', id: NavigationKey.home.index);
-      },
-      icon: Icon(
-        Icons.arrow_back_ios_new,
-        color: CustomColors.lightPink,
       ),
     );
   }
@@ -66,10 +56,12 @@ class SearchPage extends StatelessWidget {
           const Text("Geçmiş Aramalarım"),
           TextButton(
             onPressed: () {
-              print("Temizle");
               searchPageController.cleanSearchHistoryList();
             },
-            child: const Text("Temizle"),
+            child: Text(
+              "Temizle",
+              style: montserratBold.copyWith(color: CustomColors.lightPink),
+            ),
           )
         ],
       ),
@@ -86,33 +78,41 @@ class SearchPage extends StatelessWidget {
           children: List.generate(listLenght, (index) {
             return Column(
               children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 3,
-                          ),
-                          Icon(
-                            Icons.search_rounded,
-                            color: CustomColors.lightPink.withOpacity(.7),
-                          ),
-                          const SizedBox(
-                            width: 3,
-                          ),
-                          Text(searchPageController.searchHistoryList[index]),
-                        ],
-                      ),
-                      IconButton(
-                          onPressed: () {
-                            searchPageController
-                                .deleteElementFromSearchHistoryList(index);
-                          },
-                          icon:   Icon(Icons.close,color: CustomColors.black.withOpacity(.6),)),
-                    ],
+                InkWell(
+                  highlightColor: CustomColors.lightPink.withOpacity(.2),
+                  splashColor: CustomColors.lightPink.withOpacity(.2),
+                  onTap: () {},
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 3,
+                            ),
+                            Icon(
+                              Icons.search_rounded,
+                              color: CustomColors.lightPink.withOpacity(.7),
+                            ),
+                            const SizedBox(
+                              width: 3,
+                            ),
+                            Text(searchPageController.searchHistoryList[index]),
+                          ],
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              searchPageController
+                                  .deleteElementFromSearchHistoryList(index);
+                            },
+                            icon: Icon(
+                              Icons.close,
+                              color: CustomColors.black.withOpacity(.6),
+                            )),
+                      ],
+                    ),
                   ),
                 ),
                 Divider(

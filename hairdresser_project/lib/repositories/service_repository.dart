@@ -8,7 +8,7 @@ class ServiceRepository {
   Future<List<Service>?> fetchAllServices() async {
     final url = Uri.parse('${baseUrl}get-service');
     try {
-      final response = await http.get(url);
+      final response = await http.get(url); 
 
       if (response.statusCode == 200) {
         final List<dynamic> jsonData =
@@ -29,7 +29,8 @@ class ServiceRepository {
         url,
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({'search': searchText}),
-      ); 
+      );
+
       if (response.statusCode == 200) {
         final List<dynamic> jsonData =
             jsonDecode((utf8.decode(response.bodyBytes)));
@@ -90,11 +91,9 @@ class ServiceRepository {
       if (response.statusCode == 204) {
         return true;
       } else {
-        print("Failed to delete post");
         return false;
       }
     } catch (e) {
-      print("Error deleting post: $e");
       return false;
     }
   }

@@ -3,6 +3,8 @@ import 'package:hairdresser_project/constants/custom_text.dart';
 import 'package:hairdresser_project/models/post.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
 import 'package:hairdresser_project/modules/post/widgets/post_media_widget.dart';
+import 'package:hairdresser_project/utils/responsive_mesurement.dart';
+import 'package:hairdresser_project/widgets/custom_image_fetcher.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:readmore/readmore.dart';
 
@@ -33,41 +35,26 @@ class PostCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           color: CustomColors.white,
-          border: Border.all(
-              color: CustomColors.black.withOpacity(.3), width: .5),
+          border:
+              Border.all(color: CustomColors.black.withOpacity(.3), width: .5),
           borderRadius: BorderRadius.circular(12)),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Padding(
           padding: const EdgeInsets.all(16),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    const Icon(Icons.person),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                            "${post.barber.firstName} ${post.barber.firstName}",
-                            style: montserratSemiBold),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          createdAt,
-                          style: montserratSmall,
-                        ),
-                      ],
-                    ),
-                  ],
+                barberProfileImage(context),
+                //const Icon(Icons.person),
+                const SizedBox(
+                  width: 15,
                 ),
-                IconButton(
-                    onPressed: () {print( "post Detail");}, icon: const Icon(Icons.more_horiz)),
-              ]),
+                postDetails(createdAt),
+              ],
+            ),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz)),
+          ]),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,41 +70,78 @@ class PostCard extends StatelessWidget {
                 : const SizedBox()
           ],
         ),
-        GestureDetector(
-           onTap: () {},
-          child: Padding(
-            padding: const EdgeInsets.all(14),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.favorite_border)
-                          // : Icon(
-                          //     Icons.favorite,
-                          //     color: CustomColors.lightPink,
-                          //   ),
-                          ),
-                      IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.mode_comment_outlined)),
-                      IconButton(
-                          onPressed: () {}, icon: const Icon(Icons.share)),
-                    ],
-                  ),
-                  IconButton(
+        Padding(
+          padding: const EdgeInsets.all(14),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Row(
+              children: [
+                IconButton(
                     onPressed: () {},
-                    icon: const Icon(Iconsax.save_2_copy),
-                  )
-                ]),
-          ),
+                    icon: Icon(
+                      Icons.favorite_border,
+                      color: CustomColors.lightPink.withOpacity(.5),
+                    )
+                    // : Icon(
+                    //     Icons.favorite,
+                    //     color: CustomColors.lightPink,
+                    //   ),
+                    ),
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.mode_comment_outlined,
+                      color: CustomColors.lightPink.withOpacity(.5),
+                    )),
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.share,
+                      color: CustomColors.lightPink.withOpacity(.5),
+                    )),
+              ],
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Iconsax.save_2_copy,
+                color: CustomColors.lightPink.withOpacity(.5),
+              ),
+            )
+          ]),
         ),
         const SizedBox(
           height: 5,
         )
       ]),
+    );
+  }
+
+  Column postDetails(String createdAt) {
+    return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("${post.barber.firstName} ${post.barber.lastName}",
+                      style: montserratSemiBold),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    createdAt,
+                    style: montserratSmall,
+                  ),
+                ],
+              );
+  }
+
+  ClipRRect barberProfileImage(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(50),
+      child: SizedBox(
+        height: ResponsiveMesurement.asHeight(context, 5),
+        width: ResponsiveMesurement.asHeight(context, 5),
+        child: CustomImageFetcher(imageUrl: post.barber.profileImage),
+      ),
     );
   }
 

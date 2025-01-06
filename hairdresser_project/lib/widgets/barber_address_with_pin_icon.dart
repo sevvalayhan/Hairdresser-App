@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
 import 'package:hairdresser_project/models/barber.dart';
+import 'package:hairdresser_project/utils/responsive_mesurement.dart';
 
 class BarberAddressWithPinIcon extends StatelessWidget {
   const BarberAddressWithPinIcon({
@@ -8,13 +9,14 @@ class BarberAddressWithPinIcon extends StatelessWidget {
     required this.barber,
     required this.style,
     required this.locationIcon,
-    required this.iconSize,
+    required this.iconSize, required this.stringSize,
   });
 
   final Barber barber;
   final TextStyle style;
   final double iconSize;
   final Icon locationIcon;
+  final double stringSize;
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +30,14 @@ class BarberAddressWithPinIcon extends StatelessWidget {
         const SizedBox(
           width: 1,
         ),
-        Text(
-          "${barber.user.addresses[0].district.province.provinceName}, ${barber.user.addresses[0].district.districtName} ",
-          style: style,
+        SizedBox(
+          width: ResponsiveMesurement.asWidth(context, stringSize),
+          child: Text(
+          "${barber.user.addresses[0].region}, ${barber.user.addresses[0].street}, ${barber.user.addresses[0].district.districtName}, ${barber.user.addresses[0].district.province.provinceName},  ",
+                style: style,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+          ),
         ),
       ],
     );

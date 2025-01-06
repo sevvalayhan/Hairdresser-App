@@ -9,31 +9,31 @@ class BarberHomepageProfileCard extends StatelessWidget {
   final Barber barber;
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
-              radius: ResponsiveMesurement.asWidth(context, 11),
+              radius: ResponsiveMesurement.asWidth(context, 8),
               child: ClipOval(
                   child: SizedBox.fromSize(
                       size: const Size.fromRadius(50),
                       child: CachedNetworkImage(
-                          fit: BoxFit.cover,
-                          imageUrl: barber.profileImage)))),
-            SizedBox(
+                          fit: BoxFit.cover, imageUrl: barber.profileImage)))),
+          SizedBox(
             height: ResponsiveMesurement.asHeight(context, 1),
           ),
           Text(
             (barber.firstName + barber.lastName).length > 10
                 ? "${("${barber.firstName} ${barber.lastName}").substring(0, 10)}..."
-                : "${barber.firstName} ${barber.lastName}",style: montserratLargeBold.copyWith(fontSize: ResponsiveMesurement.fontPercent(context, 3)),
+                : "${barber.firstName} ${barber.lastName}",
+            style: montserratLarge.copyWith(
+                fontSize: ResponsiveMesurement.fontPercent(context, 3)),
             overflow: TextOverflow.ellipsis,
           ),
-        
         ],
       ),
     );

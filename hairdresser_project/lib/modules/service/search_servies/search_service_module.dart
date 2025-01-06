@@ -14,8 +14,8 @@ class SearchServiceModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Obx(() {
-        return Column(
+      child: 
+          Column(
           children: [
             Column(
               children: [
@@ -32,8 +32,8 @@ class SearchServiceModule extends StatelessWidget {
               ],
             )
           ],
-        );
-      }),
+        ),
+ 
     );
   }
 

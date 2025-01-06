@@ -3,25 +3,25 @@ import 'package:http/http.dart' as http;
 import 'package:hairdresser_project/models/post.dart';
 
 class PostRepository {
-  final String baseUrl = '';
+  final String baseUrl = 'http://127.0.0.1:8000/barber/';
 
-  
   Future<List<Post>?> fetchAllPosts() async {
+    final url = Uri.parse('${baseUrl}get-post');
     try {
-      final response = await http.get(Uri.parse(baseUrl));
+      final response = await http.get(url);
       if (response.statusCode == 200) {
-        List jsonResponse = json.decode(response.body);
-        return jsonResponse.map((data) => Post.fromJson(data)).toList();
+        final List<dynamic> jsonData =
+            jsonDecode(utf8.decode(response.bodyBytes));
+           
+        return jsonData.map((post) => Post.fromJson(post)).toList();
       } else {
-        print("Failed to load posts");
-        return null;
+        throw Exception('Failed to load posts');
       }
-    } catch (e) {
-      print("Error fetching posts: $e");
-      return null;
+    } catch (error) { 
+      throw Exception('Error fetching posts: $error');
     }
   }
-  
+
   Future<Post?> addPost(Post post) async {
     try {
       final response = await http.post(
@@ -34,11 +34,9 @@ class PostRepository {
       if (response.statusCode == 201) {
         return Post.fromJson(json.decode(response.body));
       } else {
-        print("Failed to add post");
         return null;
       }
     } catch (e) {
-      print("Error adding post: $e");
       return null;
     }
   }
@@ -55,11 +53,9 @@ class PostRepository {
       if (response.statusCode == 200) {
         return Post.fromJson(json.decode(response.body));
       } else {
-        print("Failed to update post");
         return null;
       }
     } catch (e) {
-      print("Error updating post: $e");
       return null;
     }
   }
@@ -70,11 +66,9 @@ class PostRepository {
       if (response.statusCode == 204) {
         return true;
       } else {
-        print("Failed to delete post");
         return false;
       }
     } catch (e) {
-      print("Error deleting post: $e");
       return false;
     }
   }

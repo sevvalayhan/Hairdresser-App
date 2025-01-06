@@ -15,6 +15,7 @@ class District {
     return {
       'id': id,
       'district_name': districtName,
+      'province':province.toJson()
     };
   }
 

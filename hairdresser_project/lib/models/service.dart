@@ -3,15 +3,15 @@ import 'package:hairdresser_project/models/category.dart';
 import 'package:hairdresser_project/models/service_image.dart';
 
 class Service {
-  final int id;
-  final Barber barber;
-  final Category category;
+    int id;
+    Barber barber;
+    Category category;
   List<ServiceImage> serviceImages;
-  final String title;
-  final String description;
-  final String includes;
-  final int duration;
-  final double price;
+    String title;
+    String description;
+    String includes;
+    int duration;
+    double price;
 
   Service({
     required this.barber,

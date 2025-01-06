@@ -10,7 +10,7 @@ class PostListPage extends StatelessWidget {
   PostController postController = Get.put(PostController());
   @override
   Widget build(BuildContext context) {
-    print("post list lenght: ${postController.postList.length}");
+ 
     return Obx(() => SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {

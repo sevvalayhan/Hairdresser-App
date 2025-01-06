@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:hairdresser_project/controllers/post_media_controller.dart';
 import 'package:hairdresser_project/models/post.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
+import 'package:hairdresser_project/models/post_media.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 // ignore: must_be_immutable

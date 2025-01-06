@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:hairdresser_project/controllers/service_controller.dart';
 import 'package:hairdresser_project/modules/service/nearby_places_services/widgets/nearby_places_card.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
+import 'package:hairdresser_project/navigation/navigation_key.dart';
+import 'package:hairdresser_project/routes/app_pages.dart';
 import 'package:hairdresser_project/utils/responsive_mesurement.dart';
 import 'package:hairdresser_project/widgets/see_details.dart';
 
@@ -15,11 +17,11 @@ class NearbyPlacesModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Obx(() => Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            constraints: const BoxConstraints(maxHeight: double.infinity),
+            constraints: BoxConstraints(
+                maxHeight: ResponsiveMesurement.asHeight(context, 50)),
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                     colors: [CustomColors.pink, CustomColors.white]),
@@ -29,25 +31,28 @@ class NearbyPlacesModule extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  const SeeDetails(
-                      detailsName: "Size Yakın", pageName: "/favoritesPage"),
-                  SizedBox(
-                      height: ResponsiveMesurement.asHeight(context, 36),
-                      child: serviceController.serviceList.isNotEmpty
-                          ? GridView.builder(
-                              cacheExtent: 20,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2, childAspectRatio: 0.5),
-                              scrollDirection: Axis.horizontal,
-                              itemCount: serviceController.serviceList.length,
-                              itemBuilder: (context, index) => NearbyPlacesCard(
-                                  service:
-                                      serviceController.serviceList[index]),
-                            )
-                          : const Center(
-                              child: Text("liste boş"),
-                            )),
+                    SeeDetails(
+                      detailsName: "Size Yakın",
+                      pageName: AppRoutes.nearbyServicesPage,id: NavigationKey.home.index,),
+                  Center(
+                    child: SizedBox(
+                        height: ResponsiveMesurement.asHeight(context, 40),
+                        child: serviceController.serviceList.isNotEmpty
+                            ? GridView.builder(
+                                cacheExtent: 25,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2, childAspectRatio: .5),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: serviceController.serviceList.length,
+                                itemBuilder: (context, index) => NearbyPlacesCard(
+                                    service:
+                                        serviceController.serviceList[index]),
+                              )
+                            : const Center(
+                                child: Text("liste boş"),
+                              )),
+                  ),
                 ],
               ),
             ),

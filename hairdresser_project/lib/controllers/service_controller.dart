@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hairdresser_project/models/service.dart';
 import 'package:hairdresser_project/repositories/service_repository.dart';
@@ -5,11 +6,16 @@ import 'package:hairdresser_project/repositories/service_repository.dart';
 class ServiceController extends GetxController {
   var serviceList = <Service>[].obs;
   var searchServiceList = <Service>[].obs;
- 
+final PageController pageController = PageController();
 
   @override
   void onReady() async {
     await fetchAllService();
+  }
+
+  @override
+  void onClose() {
+    pageController.dispose();
   }
 
   final ServiceRepository serviceRepository = ServiceRepository();
@@ -30,6 +36,9 @@ class ServiceController extends GetxController {
   Future<void> fetchSearchServices(String searchText) async {
     try {
       var serviceData = await serviceRepository.fetchSearchServices(searchText);
+      serviceData?.forEach((element) {
+        print(element.title);
+      });
       if (serviceData != null) {
         searchServiceList.assignAll(serviceData);
       } else {

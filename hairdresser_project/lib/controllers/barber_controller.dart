@@ -6,6 +6,7 @@ class BarberController extends GetxController {
   final _barberList = <Barber>[].obs;
   final _searchBarberList = <Barber>[].obs;
   final _filteredBarberList = <Barber>[].obs;
+ 
 
   List<Barber> get barberList => _barberList;
   set barberList(List<Barber> value) {

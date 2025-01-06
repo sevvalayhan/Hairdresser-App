@@ -1,15 +1,14 @@
-
 class Category {
-  final int id;
-  final String categoryName;
-  final String? description;
-  final String createdAt;
-  final String categoryImage;
+  int id;
+  String categoryName;
+  String description;
+  String createdAt;
+  String categoryImage;
 
   Category({
     required this.id,
     required this.categoryName,
-    this.description,
+    this.description = "",
     required this.createdAt,
     required this.categoryImage,
   });

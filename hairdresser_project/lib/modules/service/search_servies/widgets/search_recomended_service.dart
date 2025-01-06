@@ -37,7 +37,7 @@ class SearchRecomendedService extends StatelessWidget {
                   ),
                   Text(
                     service.title,
-                    style: montserratLargeBold,
+                    style: montserratLargeBold,overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),

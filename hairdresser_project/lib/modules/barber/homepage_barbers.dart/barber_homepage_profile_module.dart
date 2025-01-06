@@ -12,7 +12,7 @@ class BarberProfileList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double vertical = ResponsiveMesurement.asHeight(context, 19);
+    double vertical = ResponsiveMesurement.asHeight(context, 13 );
     return Obx(
       () => SizedBox(
         height: vertical,

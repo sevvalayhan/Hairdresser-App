@@ -1,3 +1,3 @@
 enum NavigationKey {
-  home
+  home,barbers
 }

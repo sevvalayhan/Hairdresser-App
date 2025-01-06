@@ -68,7 +68,7 @@ class ServiceCard extends StatelessWidget {
                   style: montserratMedium.copyWith(
                       fontSize: 14, color: Colors.black),
                 ),
-                TextButton(
+                TextButton( 
                   onPressed: () {},
                   child: Text("Randevu Al",
                       style: montserratMedium.copyWith(

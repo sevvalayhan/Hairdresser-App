@@ -8,10 +8,12 @@ class SeeDetails extends StatelessWidget {
     super.key,
     required this.detailsName,
     required this.pageName,
+    required this.id,
   });
 
   final String detailsName;
   final String pageName;
+  final int id;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class SeeDetails extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              Get.toNamed(pageName);
+              Get.toNamed(pageName, id: id);
             },
             child: Row(
               children: [

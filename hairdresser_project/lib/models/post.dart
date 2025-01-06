@@ -12,23 +12,69 @@ class Post {
   List<PostMedia> postMediaList;
 
   Post({
-    required this.id,
+    this.id = 0,
     this.postMediaList = const <PostMedia>[],
     required this.barber,
     required this.category,
-    required this.content,
+    this.content = '',
     required this.createdAt,
     required this.updatedAt,
   });
 
   factory Post.fromJson(Map<String, dynamic> json) {
+    // return Post(
+    //     id: 1,
+    //     barber: Barber(
+    //         id: 1,
+    //         user: User(
+    //             id: 1,
+    //             email: "email",
+    //             phoneNumber: "phoneNumber",
+    //             addresses: <Address>[Address(
+    //                 id: 1,
+    //                 district: District(
+    //                     id: 1,
+    //                     districtName: "districtName",
+    //                     province: Province(
+    //                         id: 1,
+    //                         provinceName: "provinceName",
+    //                         country: Country(
+    //                             id: 1,
+    //                             countryCode: 1,
+    //                             countryName: "countryName"))),
+    //                 addressType: 1,
+    //                 buildingNo: "1",
+    //                 street: "street",
+    //                 region: "region",
+    //                 postalCode: 1,
+    //                 description: "description",
+    //                 coordinate: "1",
+    //                 userId: 1)]),
+    //         identityNumber: "1",
+    //         firstName: "firstName",
+    //         lastName: "lastName",
+    //         bio: "bio",
+    //         email: "email",
+    //         profileImage: "profileImage",
+    //         identityCard: "identityCard",
+    //         status: 1,
+    //         shopName: "shopName",
+    //         isImproved: true),
+    //     category: Category(
+    //         id: 1,
+    //         categoryName: "categoryName",
+    //         createdAt: "",
+    //         categoryImage: "categoryImage"),
+    //     content: "content",
+    //     createdAt: DateTime.now(),
+    //     updatedAt: DateTime.now());
     return Post(
       id: json['id'],
-      postMediaList: (json['post_media'] as List)
+      postMediaList: json['post_medias'] != null ? (json['post_medias'] as List)
           .map((item) => PostMedia.fromJson(item))
-          .toList(),
+          .toList() : [],
       barber: Barber.fromJson(json['barber']),
-      category: json['category'],
+      category: Category.fromJson(json['category']),
       content: json['content'],
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
@@ -40,12 +86,10 @@ class Post {
       'id': id,
       'hairdresser': barber.toJson(),
       'content': content,
-      'category': category,
+      'category': category.toJson(),
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
-      'post_media': postMediaList?.map((media) => media.toJson()).toList(),
+      'post_medias': postMediaList.map((media) => media.toJson()).toList(),
     };
   }
 }
-
-enum MediaType { video, image }

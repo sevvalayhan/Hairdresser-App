@@ -23,7 +23,7 @@ class CategoryButtonList extends StatelessWidget {
   Widget build(BuildContext context) {
     double horizontalSize = MediaQuery.sizeOf(context).height;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal:6),
+      padding: const EdgeInsets.symmetric(horizontal:6,vertical: 3),
       child: SizedBox(
           height: 35,
           width: double.infinity,
@@ -46,12 +46,7 @@ class CategoryButtonList extends StatelessWidget {
   OutlinedButton categoryButton(int index) {
     return OutlinedButton(
         onPressed: () {
-          print(index);
-          print("post list lenght${postController.filteredPostList.length}");
-          print(
-              "service list lenght${serviceController.serviceList.length}");
-          // serviceController.filterService(categoryNames[index]);
-        //  postController.filterPosts(categoryNames[index]);
+         
           homePageController.selectedCategoryIndex.value = index;
         },
         style: OutlinedButton.styleFrom(
