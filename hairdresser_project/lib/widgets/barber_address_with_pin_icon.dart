@@ -33,7 +33,7 @@ class BarberAddressWithPinIcon extends StatelessWidget {
         SizedBox(
           width: ResponsiveMesurement.asWidth(context, stringSize),
           child: Text(
-          "${barber.user.addresses[0].region}, ${barber.user.addresses[0].street}, ${barber.user.addresses[0].district.districtName}, ${barber.user.addresses[0].district.province.provinceName},  ",
+         " ${barber.user.addresses[0].district.districtName}, ${barber.user.addresses[0].district.province.provinceName},  ",
                 style: style,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,

@@ -14,17 +14,17 @@ class PostMediaWidget extends StatelessWidget {
   PostMediaWidget({
     super.key,
     required this.post,
+    this.postMediaHeight,
   });
   PostMediaController postMediaController = Get.put(PostMediaController());
-
+  double? postMediaHeight = 300;
   @override
-  Widget build(BuildContext context) { 
-
+  Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SizedBox(
-            height: 300,
+            height: postMediaHeight,
             child: PageView.builder(
                 controller: postMediaController.pageController,
                 itemCount: post.postMediaList.isNotEmpty
@@ -34,7 +34,7 @@ class PostMediaWidget extends StatelessWidget {
                   if (post.postMediaList.isNotEmpty) {
                     if (post.postMediaList[index].mediaType ==
                         MediaType.video) {
-                      String url = post.postMediaList [index].mediaUrl;
+                      String url = post.postMediaList[index].mediaUrl;
                       postMediaController.initializeVideo(url);
                       return FutureBuilder(
                           future: postMediaController.videoPlayerController!
@@ -52,14 +52,20 @@ class PostMediaWidget extends StatelessWidget {
                           });
                     } else if (post.postMediaList[index].mediaType ==
                         MediaType.image) {
-                      return CachedNetworkImage(
-                        imageUrl: post.postMediaList[index].mediaUrl,
-                        progressIndicatorBuilder:
-                            (context, url, downloadProgress) =>
-                                const AnimatedProgressIndicator(),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                        fit: BoxFit.cover,
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(5),
+                          child: CachedNetworkImage(
+                            imageUrl: post.postMediaList[index].mediaUrl,
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) =>
+                                    const AnimatedProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       );
                     }
                   }
@@ -68,11 +74,14 @@ class PostMediaWidget extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        SmoothPageIndicator(
-          controller: postMediaController.pageController,
-          count: post.postMediaList.length,
-          effect: const ScrollingDotsEffect(dotHeight: 8.0, dotWidth: 8.0),
-        )
+        post.postMediaList.length > 1
+            ? SmoothPageIndicator(
+                controller: postMediaController.pageController,
+                count: post.postMediaList.length,
+                effect:
+                    const ScrollingDotsEffect(dotHeight: 8.0, dotWidth: 8.0),
+              )
+            : const SizedBox()
       ],
     );
   }

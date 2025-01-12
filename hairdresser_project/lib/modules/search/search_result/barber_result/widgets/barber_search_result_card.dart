@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hairdresser_project/constants/custom_text.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
 import 'package:hairdresser_project/models/barber.dart';
+import 'package:hairdresser_project/routes/app_pages.dart';
 import 'package:hairdresser_project/utils/responsive_mesurement.dart';
 import 'package:hairdresser_project/widgets/barber_address_with_pin_icon.dart';
 import 'package:hairdresser_project/widgets/custom_image_fetcher.dart';
@@ -15,7 +17,7 @@ class BarberSearchResultCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print(barber);
+        Get.toNamed(AppRoutes.barberDetailsPage);
       },
       child: Padding(
         padding: const EdgeInsets.all(5),

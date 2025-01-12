@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hairdresser_project/constants/custom_text.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
-import 'package:hairdresser_project/controllers/barber_controller.dart';
+import 'package:hairdresser_project/models/barber.dart';
 import 'package:hairdresser_project/modules/barber/barber_details.dart/barber_details_home_module.dart';
-import 'package:hairdresser_project/navigation/navigation_key.dart';
-import 'package:hairdresser_project/routes/app_pages.dart';
 import 'package:hairdresser_project/utils/responsive_mesurement.dart';
 import 'package:hairdresser_project/widgets/custom_image_fetcher.dart';
 import 'package:hairdresser_project/widgets/home_widgets/custom_search_bar.dart';
@@ -15,21 +13,21 @@ class BarberDetailsPage extends StatelessWidget {
   BarberDetailsPage({
     super.key,
   });
-  //Barber barber = Get.arguments;
-  BarberController barberController = Get.put(BarberController());
-  List<Widget> tabList = [
-    Center(
-      child: BarberDetailsHomeModule(),
-    ),
-    Center(
-      child: Text("data"),
-    ),
-    Center(
-      child: Text("data"),
-    )
-  ];
+  Barber barber = Get.arguments;
   @override
   Widget build(BuildContext context) {
+    List<Widget> tabList = [
+      BarberDetailsHomeModule(
+        barber: barber,
+      ),
+      const Center(
+        child: Text("data"),
+      ),
+      const Center(
+        child: Text("data"),
+      )
+    ];
+    print(barber.shopName);
     return DefaultTabController(
       length: tabList.length,
       child: Scaffold(
@@ -81,9 +79,8 @@ class BarberDetailsPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(50)),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(50),
-        child: const CustomImageFetcher(
-          // imageUrl:  barber.profileImage  ,
-          imageUrl: "assets/images/boy.jpg",
+        child: CustomImageFetcher(
+          imageUrl: barber.profileImage,
         ),
       ),
     );
@@ -94,14 +91,11 @@ class BarberDetailsPage extends StatelessWidget {
       height: ResponsiveMesurement.asHeight(context, 20),
       child: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/boy.jpg"),
-                    fit: BoxFit.cover)),
+          CustomImageFetcher(
+            imageUrl: barber.profileImage,
           ),
           Container(
-            color: Colors.white.withOpacity(.82),
+            color: Colors.white.withOpacity(.80),
           ),
           Container(
             decoration: BoxDecoration(
@@ -156,8 +150,8 @@ class BarberDetailsPage extends StatelessWidget {
       children: [
         IconButton(
           onPressed: () {
-            Get.toNamed(AppRoutes.home, id: NavigationKey.home.index);
-            //  Get.back(); //bunu yaptığım zaman evet bir önceki sayfaya gidiyor ama search sayfası sıfırlanıyor
+            //Get.toNamed(AppRoutes.home, id: NavigationKey.home.index);
+            Get.back(); //bunu yaptığım zaman evet bir önceki sayfaya gidiyor ama search sayfası sıfırlanıyor
           },
           icon: Icon(
             size: 20,
@@ -166,9 +160,8 @@ class BarberDetailsPage extends StatelessWidget {
           ),
         ),
         barberProfileImage(context),
-        //Text(barber.shopName),
         Text(
-          "Dore Güzellik Salonu",
+          barber.shopName,
           style: montserratLarge,
         ),
         followButtonContainer(context)
@@ -221,4 +214,3 @@ class BarberDetailsPage extends StatelessWidget {
     );
   }
 }
- 

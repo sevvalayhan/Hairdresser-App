@@ -37,7 +37,6 @@ final PageController pageController = PageController();
     try {
       var serviceData = await serviceRepository.fetchSearchServices(searchText);
       serviceData?.forEach((element) {
-        print(element.title);
       });
       if (serviceData != null) {
         searchServiceList.assignAll(serviceData);

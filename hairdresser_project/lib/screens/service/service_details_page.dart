@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hairdresser_project/constants/custom_text.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
-import 'package:hairdresser_project/controllers/home_page_controller.dart';
-import 'package:hairdresser_project/controllers/search_page_controller.dart';
 import 'package:hairdresser_project/controllers/service_detail_controller.dart';
 import 'package:hairdresser_project/models/service.dart';
 import 'package:hairdresser_project/modules/service/base_services/widgets/service_image_widget.dart';
@@ -13,7 +11,6 @@ import 'package:hairdresser_project/utils/responsive_mesurement.dart';
 import 'package:hairdresser_project/widgets/appointment_button.dart';
 import 'package:hairdresser_project/widgets/barber_profil_image_widget.dart';
 import 'package:hairdresser_project/widgets/filter_icon_button.dart';
-import 'package:hairdresser_project/widgets/home_widgets/custom_search_bar.dart';
 
 // ignore: must_be_immutable
 class ServiceDetail extends StatelessWidget {
@@ -115,7 +112,7 @@ class ServiceDetail extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () {
-               //Get.toNamed(url, );
+              //Get.toNamed(url, );
               Get.back(); //bunu yaptığım zaman evet bir önceki sayfaya gidiyor ama search sayfası sıfırlanıyor
             },
             icon: Icon(
@@ -125,7 +122,8 @@ class ServiceDetail extends StatelessWidget {
             ),
           ),
           const CustomSearchContainer(
-              sizePercent: 70, ),
+            sizePercent: 70,
+          ),
           const FilterIconButton(),
         ],
       ),
@@ -187,7 +185,7 @@ class ServiceDetail extends StatelessWidget {
     );
   }
 
-  Container barberInformation(BuildContext context) {
+  Widget barberInformation(BuildContext context) {
     return Container(
         width: double.infinity,
         height: ResponsiveMesurement.asHeight(context, 8),
@@ -200,13 +198,14 @@ class ServiceDetail extends StatelessWidget {
           child: Row(
             children: [
               InkWell(
-                onTap: () {},
+                onTap: () { Get.toNamed(AppRoutes.barberDetailsPage, arguments: service.barber);},
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     BarberProfilImageWidget(
                       imageUrl: service.barber.profileImage,
-                      circleDiameter: ResponsiveMesurement.asWidth(context, 10),
+                      circleDiameter:
+                          ResponsiveMesurement.asWidth(context, 10),
                     ),
                     const SizedBox(
                       width: 10,
@@ -341,19 +340,20 @@ class ServiceDetail extends StatelessWidget {
     );
   }
 }
+
 class CustomSearchContainer extends StatelessWidget {
-  const CustomSearchContainer(
-      {super.key, required this.sizePercent, });
- 
+  const CustomSearchContainer({
+    super.key,
+    required this.sizePercent,
+  });
+
   final double sizePercent;
- 
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(AppRoutes.searchPage,id:NavigationKey.home.index); 
-
+        Get.toNamed(AppRoutes.searchPage, id: NavigationKey.home.index);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),

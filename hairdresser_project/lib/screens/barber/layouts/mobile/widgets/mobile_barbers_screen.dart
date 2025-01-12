@@ -6,7 +6,6 @@ import 'package:hairdresser_project/controllers/barber_controller.dart';
 import 'package:hairdresser_project/modules/barber/barber_cards/barber_card.dart';
 import 'package:hairdresser_project/utils/responsive_mesurement.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-
 // ignore: must_be_immutable
 class MobileBarbersPage extends StatelessWidget {
   MobileBarbersPage({super.key});
@@ -15,23 +14,25 @@ class MobileBarbersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          filterButtons(context),
-          Obx(() {
-            if (barberController.barberList.isEmpty) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            return Column(
-              children: List.generate(
-                barberController.barberList.length,
-                (index) {
-                  return BarberCard(barber: barberController.barberList[index]);
-                },
-              ),
-            );
-          }),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            filterButtons(context),
+            Obx(() {
+              if (barberController.barberList.isEmpty) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return Column(
+                children: List.generate(
+                  barberController.barberList.length,
+                  (index) {
+                    return BarberCard(barber: barberController.barberList[index]);
+                  },
+                ),
+              );
+            }),
+          ],
+        ),
       ),
     );
   }
@@ -84,7 +85,6 @@ class MobileBarbersPage extends StatelessWidget {
   Widget filterIcon(BuildContext context, Widget icon, String filterName) {
     return GestureDetector(
       onTap: () {
-        print(filterName);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

@@ -89,7 +89,7 @@ class NearbyPlacesCard extends StatelessWidget {
             SizedBox(
               width: ResponsiveMesurement.asWidth(context, 28),
               child: Text(
-                "${service.barber.user.addresses[0].region}, ${service.barber.user.addresses[0].street}, ${service.barber.user.addresses[0].district.districtName} ",
+                "${service.barber.user.addresses[0].district.province.provinceName}, ${service.barber.user.addresses[0].district.districtName} ",
                 style: montserratSmall,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hairdresser_project/constants/custom_text.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
 import 'package:hairdresser_project/models/barber.dart';
+import 'package:hairdresser_project/routes/app_pages.dart';
 import 'package:hairdresser_project/widgets/barber_address_with_pin_icon.dart';
 import 'package:hairdresser_project/widgets/custom_image_fetcher.dart';
 
@@ -13,30 +15,35 @@ class SearchNearbyBarber extends StatelessWidget {
     Size size = MediaQuery.sizeOf(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-            border: Border.all(color: CustomColors.lightPink),
-            borderRadius: BorderRadius.circular(20)),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                children: [
-                  barberProfileImage(size),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  barberInformation(),
-                ],
-              ),
-              Icon(
-                Icons.chevron_right,
-                color: CustomColors.lightPink,
-              ),
-            ],
+      child: GestureDetector(
+        onTap: () {
+                 Get.toNamed(AppRoutes.barberDetailsPage,arguments: barber);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              border: Border.all(color: CustomColors.lightPink),
+              borderRadius: BorderRadius.circular(20)),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    barberProfileImage(size),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    barberInformation(),
+                  ],
+                ),
+                Icon(
+                  Icons.chevron_right,
+                  color: CustomColors.lightPink,
+                ),
+              ],
+            ),
           ),
         ),
       ),

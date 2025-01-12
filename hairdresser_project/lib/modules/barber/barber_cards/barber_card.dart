@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hairdresser_project/constants/custom_text.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
 import 'package:hairdresser_project/models/barber.dart';
+import 'package:hairdresser_project/routes/app_pages.dart';
 import 'package:hairdresser_project/utils/responsive_mesurement.dart';
 import 'package:hairdresser_project/widgets/barber_address_with_pin_icon.dart';
 import 'package:hairdresser_project/widgets/custom_image_fetcher.dart';
@@ -13,7 +15,9 @@ class BarberCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+       Get.toNamed(AppRoutes.barberDetailsPage,arguments: barber);
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
         child: SizedBox(
@@ -40,17 +44,17 @@ class BarberCard extends StatelessWidget {
   }
 
   Widget categoryNameList(BuildContext context) {
-    print("barber.categories.length: ${barber.categories.length}");
     return SizedBox(
       width: ResponsiveMesurement.asWidth(context, 40),
       height: ResponsiveMesurement.asHeight(context, 10),
       child: GridView.builder(
-        itemCount: barber.categories.length>6?6:barber.categories.length,
+        itemCount: barber.categories.length > 6 ? 6 : barber.categories.length,
         itemBuilder: (builder, index) {
           return categoryName(barber.categories[index].categoryName);
         },
-        gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount:barber.categories.length<2?barber.categories.length:2,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount:
+                barber.categories.length < 2 ? barber.categories.length : 2,
             crossAxisSpacing: 3,
             mainAxisSpacing: 3,
             childAspectRatio: 3.5),
@@ -87,18 +91,16 @@ class BarberCard extends StatelessWidget {
         children: [
           Text(" ${barber.shopName}", style: montserratLarge),
           BarberAddressWithPinIcon(
-            stringSize: 50,
+              stringSize: 50,
               barber: barber,
               style: montserratSmall,
               locationIcon: const Icon(Icons.pin_drop_outlined),
               iconSize: 15),
-          categoryNameList(context), 
+          categoryNameList(context),
         ],
       ),
     );
   }
-
- 
 
   SizedBox barberImage(BuildContext context) {
     return SizedBox(

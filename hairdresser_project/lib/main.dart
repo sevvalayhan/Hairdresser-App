@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hairdresser_project/constants/static/custom_colors.dart';
-import 'package:hairdresser_project/routes/app_pages.dart';
-import 'package:hairdresser_project/screens/barber/barber_details_page.dart';
+import 'package:hairdresser_project/routes/app_pages.dart'; 
+import 'package:hairdresser_project/screens/dashboard/dashboard_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        initialRoute: AppRoutes.barberDetailsPage,
+        initialRoute: AppRoutes.dashboard,
         getPages: AppPages.pages,
         theme: ThemeData(
           drawerTheme: DrawerThemeData(backgroundColor: CustomColors.white),
@@ -23,6 +23,6 @@ class MyApp extends StatelessWidget {
           ),
           fontFamily: 'Montserrat',
         ),
-        home:    BarberDetailsPage());
+        home: const DashboardScreen());
   }
 }

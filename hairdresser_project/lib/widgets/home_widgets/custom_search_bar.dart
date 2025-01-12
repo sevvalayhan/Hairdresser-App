@@ -16,6 +16,7 @@ class CustomSearchBar extends StatelessWidget {
 
   final SearchPageController searchBarController =
       Get.put(SearchPageController());
+      
   final HomePageController homePageController = Get.put(HomePageController());
   @override
   Widget build(BuildContext context) {
@@ -71,6 +72,7 @@ class CustomSearchBar extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class CustomSearchContainer extends StatelessWidget {
   CustomSearchContainer(
       {super.key, required this.sizePercent, required this.nextScreen,this.backgroundColor});
@@ -86,8 +88,6 @@ class CustomSearchContainer extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Get.toNamed(nextScreen, id: NavigationKey.home.index,);
-        print(nextScreen);
-
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),

@@ -8,12 +8,14 @@ import 'package:hairdresser_project/widgets/custom_image_fetcher.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:readmore/readmore.dart';
 
+// ignore: must_be_immutable
 class PostCard extends StatelessWidget {
-  const PostCard({
+    const PostCard({
     super.key,
-    required this.post,
+    required this.post, 
   });
   final Post post;
+
 
   String formatDate(DateTime createdAt) {
     final Duration difference = DateTime.now().difference(post.createdAt);
@@ -63,7 +65,7 @@ class PostCard extends StatelessWidget {
             post.postMediaList.isNotEmpty
                 ? Padding(
                     padding: EdgeInsets.zero,
-                    child: PostMediaWidget(
+                    child: PostMediaWidget( 
                       post: post,
                     ),
                   )

@@ -10,7 +10,6 @@ class CustomImageFetcher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(      
-      
       imageUrl: imageUrl,
       progressIndicatorBuilder: (context, url, downloadProgress) =>
           const AnimatedProgressIndicator(),
